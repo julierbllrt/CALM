@@ -126,10 +126,10 @@
               </button>
               <div class="dropdown-menu">
                 <li>
-                  <a class="dropdown-item" href="#about">A propos</a>
+                  <a class="dropdown-item" data-toggle="collapse" href="#about">A propos</a>
                 </li>
                 <li>
-                  <a class="dropdown-item" href="#contact">Contact</a>
+                  <a class="dropdown-item" data-toggle="collapse" href="#contact">Contact</a>
                 </li>
               </div>
             </div>
@@ -146,19 +146,19 @@
               <div class="dropdown-menu">
                 <li>
                   <a *ngIf="isLogged && (user.role[0] == 'patient' && user.role[1] != 'building' && user.role[1] != 'organisation')"
-                          [routerLink]="['/current-treatment' , {'id' : user._id}]" routerLinkActive="active"
+                          [routerLink]="['/current-treatment' , {'id' : user._id}]" data-toggle="collapse" routerLinkActive="active"
                           [routerLinkActiveOptions]="{exact:true}">
                     <i class="glyphicon glyphicon-folder-open"></i> Mes traitements
                   </a>
                 </li>
                 <li>
                   <a *ngIf="isLogged && (user.role[0] == 'patient' && user.role[1] != 'building' && user.role[1] != 'organisation')"
-                          routerLink="patient_rdv" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
+                          routerLink="patient_rdv" data-toggle="collapse" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
                     <i class="glyphicon glyphicon-calendar"></i> Prendre rendez-vous
                   </a>
                 </li>
                 <li>
-                  <a *ngIf="isLogged && (user.role[1] == 'medecin')" routerLink="doctor-space" routerLinkActive="active"
+                  <a *ngIf="isLogged && (user.role[1] == 'medecin')" data-toggle="collapse" routerLink="doctor-space" routerLinkActive="active"
                           [routerLinkActiveOptions]="{exact:true}">
                     <i class="glyphicon glyphicon-briefcase"></i> Espace pro</a>
                 </li>
@@ -168,23 +168,23 @@
                     infrastructure</a>
                 </li>
                 <li>
-                  <a *ngIf="isLogged && (user.role[1] == 'organisation')" routerLink="organisation-space"
+                  <a *ngIf="isLogged && (user.role[1] == 'organisation')" data-toggle="collapse" routerLink="organisation-space"
                           routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
                     <i class="glyphicon glyphicon-briefcase"></i> Espace
                     organisation</a>
                 </li>
                 <li>
-                  <a routerLink="profile" routerLinkActive="active">
+                  <a routerLink="profile" data-toggle="collapse" routerLinkActive="active">
                     <i class="glyphicon glyphicon-user"></i> Profil
                   </a>
                 </li>
                 <li>
-                  <a routerLink="settings" routerLinkActive="active">
+                  <a routerLink="settings" data-toggle="collapse" routerLinkActive="active">
                     <i class="glyphicon glyphicon-cog"></i> Paramètres
                   </a>
                 </li>
                 <li>
-                  <a routerLinkActive="active" (click)="logout()">
+                  <a routerLinkActive="active" data-toggle="collapse" (click)="logout()">
                     <i class="glyphicon glyphicon-log-out"></i> Deconnexion
                   </a>
                 </li>
@@ -193,7 +193,7 @@
           </li>
           <li>
             <div>
-              <button>
+              <button data-toggle="collapse">
               <a *ngIf="!isLogged" routerLink="login" routerLinkActive="active">
               <span class="glyphicon glyphicon-log-in"></span> Connexion</a>
             </button>
@@ -230,3 +230,12 @@
   </a>
   <p>Cappac Site Copyrights</p>
 </footer>
+
+
+<script>
+$(document).ready(function () {
+  $(".navbar-nav li a").click(function(event) {
+    $(".navbar-collapse").collapse('hide');
+  });
+});
+</script>

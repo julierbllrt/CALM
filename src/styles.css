@@ -33,6 +33,9 @@ button:focus {
 }
 form{
   width: 80%;
+  min-width: 200px;
+  margin-left: 10% !important;
+  margin-right: 10%;
 }
 
 /*
