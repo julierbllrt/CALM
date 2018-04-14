@@ -13,53 +13,31 @@ var Patient = require('../models/patient');
 var Building = require('../models/building');
 var logger = require('../config/logger');
 var fs = require('fs');
-var https = require('https');
 
-
-function verifyRecaptcha(key, callback){
-  console.log("going verify");
-  var SECRET = "6Le2J08UAAAAANx-dc0SFiaDF5NJvPBrZmJShhNT";
-  https.get("https://www.google.com/recaptcha/api/siteverify?secret=" + SECRET + "&response=" + key, function(res) {
-    var data = "";
-    res.on('data', function (chunk) {
-      data += chunk.toString();
-    });
-    res.on('end', function() {
-      try {
-        var parsedData = JSON.parse(data);
-        console.log(parsedData);
-        callback(parsedData.success);
-      } catch (e) {
-        console.log(e);
-        callback(false);
-      }
-    });
-  });
-}
 
 module.exports.register = function(req, res) {
   var address = new Address();
-  //user.profile_img.data = fs.readFileSync(req.body[0].profile_img.data);
-  //user.profile_img.contentType = req.body[0].contentType;
-  address.country = req.body[0].address.country;
-  address.city = req.body[0].address.city;
-  address.street_address = req.body[0].address.street_address;
-  address.num = req.body[0].address.num;
-  address.latitude = req.body[0].address.latitude;
-  address.longitude = req.body[0].address.longitude;
+  //user.profile_img.data = fs.readFileSync(req.body.profile_img.data);
+  //user.profile_img.contentType = req.body.contentType;
+  address.country = req.body.address.country;
+  address.city = req.body.address.city;
+  address.street_address = req.body.address.street_address;
+  address.num = req.body.address.num;
+  address.latitude = req.body.address.latitude;
+  address.longitude = req.body.address.longitude;
 
   //Create address
   address.save(function(err) {
   });
 
-  // console.log("req.body[0] : ", req.body[0]);
+  // console.log("req.body : ", req.body);
   var user = new User(); // Important : create the _id of the user
-  user.first_name = req.body[0].first_name;
-  user.last_name = req.body[0].last_name;
-  user.email = req.body[0].email;
-  user.password = user.generateHash(req.body[0].password);
-  user.birth_date = req.body[0].birth_date;
-  user.role = ['patient',req.body[0].role];
+  user.first_name = req.body.first_name;
+  user.last_name = req.body.last_name;
+  user.email = req.body.email;
+  user.password = user.generateHash(req.body.password);
+  user.birth_date = req.body.birth_date;
+  user.role = ['patient',req.body.role];
   user.address = new Address(address);
 
 
@@ -70,49 +48,40 @@ module.exports.register = function(req, res) {
       res.status(409);
     }
     else {
-      verifyRecaptcha(req.body[1], function(success) {
-        if (success) {
-          console.log("success");
-          //res.end("Success!");
-          user.save(function (err) {
-            var token;
-            token = user.generateJwt();
-            res.status(200);
-            res.json({
-              "token": token
-            });
-          });
-
-          switch (req.body[0].role) {
-            case "medecin":
-              var doctor = new Doctor({user_id: user._id});
-              var patient = new Patient({user_id: user._id});
-              doctor.save(function (err) {
-              });
-              patient.save(function (err) {
-              });
-              break;
-            case "patient":
-              var patient = new Patient({user_id: user._id});
-              patient.save(function (err) {
-              });
-              break;
-            case "building":
-              var building = new Building({user_id: user._id});
-              building.save(function (err) {
-              });
-            default:
-              console.log("Default case");
-              break;
-          }
-          logger.info('New user registered :' + user._id);
-        } else {
-          res.json({"response" : "Failed"});
-          logger.info('User tried to register without captcha or failed it');
-        }
+      user.save(function(err) {
+        var token;
+        token = user.generateJwt();
+        res.status(200);
+        res.json({
+          "token" : token
+        });
       });
+
+      switch (req.body.role) {
+        case "medecin":
+          var doctor = new Doctor({user_id: user._id});
+          var patient = new Patient({user_id: user._id});
+          doctor.save(function(err) {
+          });
+          patient.save(function(err){
+          });
+          break;
+        case "patient":
+          var patient = new Patient({user_id: user._id});
+          patient.save(function(err) {
+          });
+          break;
+        case "building":
+          var building = new Building({user_id:user._id});
+          building.save(function(err){});
+        default:
+          console.log("Default case");
+          break;
+      }
+      logger.info('New user registered :' + user._id);
     }
   });
+
 };
 
 module.exports.login = function(req, res) {

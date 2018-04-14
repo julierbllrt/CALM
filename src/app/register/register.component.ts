@@ -1,11 +1,10 @@
-import {Component, OnInit, ChangeDetectorRef, NgModule, ViewChild} from '@angular/core';
+import {Component, OnInit, ChangeDetectorRef, NgModule} from '@angular/core';
 import {Router} from '@angular/router';
 import {AuthenticationService} from '../shared/services/authentication.service';
 import {User} from "../shared/models/user";
 import {Address} from '../shared/models/address';
 import {GooglemapsService} from "../shared/services/googlemaps.service";
 import {MailService} from "../shared/services/mail.service";
-import {ReCaptchaComponent} from 'angular2-recaptcha';
 
 
 @Component({
@@ -17,7 +16,6 @@ import {ReCaptchaComponent} from 'angular2-recaptcha';
 
 
 export class RegisterComponent implements OnInit {
-  @ViewChild(ReCaptchaComponent) captcha: ReCaptchaComponent;
   user = new User(null);
   submitted: boolean = true;
 
@@ -52,6 +50,7 @@ export class RegisterComponent implements OnInit {
     this.base64textString= btoa(binaryString);
   }*/
 
+
   displayAddress() {
     if (this.numberFetchAddressTry < 8 && this.numberFetchAddressTry > 5) {
       console.log('fetch the coord of the address');
@@ -85,6 +84,7 @@ export class RegisterComponent implements OnInit {
             "Prenez votre premier rendez-vous grâce à CALM ! \n\n Cordialement, \n\n CALM";
           this.mailService.sendMail(this.user.email, "[CALM] Confirmation d'inscription", confText)
             .subscribe( resp => {
+              console.log(resp);
               this.login(this.user.email, this.user.password);
               this.router.navigate(['/profile']);
               location.reload();
@@ -94,20 +94,13 @@ export class RegisterComponent implements OnInit {
 
   // create the new user
   register() {
-    let resp = this.captcha.getResponse();
-    this.authentication.register(this.user, resp)
+    this.authentication.register(this.user)
       .subscribe(
         res => {
-          if (res.response === "Failed") {
-            location.reload();
-            alert("Please check the captcha before clicking");
-          }
-          else {
-            this.submitted = true;
-            this.login(this.user.email, this.user.password);
-            this.router.navigate(['/profile']);
-            location.reload();
-          }
+          this.submitted = true;
+          this.login(this.user.email, this.user.password);
+          this.router.navigate(['/profile']);
+          location.reload();
         });
     this.submitted = false;
   }
