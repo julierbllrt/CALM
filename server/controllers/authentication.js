@@ -107,8 +107,8 @@ module.exports.register = function(req, res) {
           }
           logger.info('New user registered :' + user._id);
         } else {
-          res.json({"response" : "Failed"});
           logger.info('User tried to register without captcha or failed it');
+          res.json({"response" : "Failed"});
         }
       });
     }
