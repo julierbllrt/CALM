@@ -8,6 +8,9 @@ const passport = require('passport');
 const bodyParser = require('body-parser');
 const configDB = require('./server/config/database');
 const fs = require('fs');
+const hpp = require('hpp');
+const helmet = require('helmet');
+const csrf = require('csurf');
 
 const port = process.env.PORT || '3000';
 var app = express();
@@ -65,6 +68,10 @@ app.use('/api', apiMail);
 app.use('/api', apiLog);
 app.use('/api', autorisation);
 app.use('/api', rappel);
+
+// Solutions de securite
+app.use(hpp());
+app.use(helmet());
 
 // Catch all other routes and return the index file
 app.get('*', (req, res) => res.sendFile(path.join(__dirname, 'dist/index.html')));
