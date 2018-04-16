@@ -46,7 +46,7 @@ module.exports = function (passport) {
     User.find({})
       .populate('address')
       .exec(function (err, docs) {
-        if (err) { res.json(err); } else { res.json(docs); }
+        if (!err && docs) { res.json(docs); } else { res.json(err); }
       });
   });
 
@@ -54,7 +54,7 @@ module.exports = function (passport) {
     Doctor.find({})
       .populate({path: 'user_id', populate: {path: 'address'}})
       .exec(function (err, docs) {
-        if (err) { res.json(err); } else { res.json(docs); }
+        if (!err && docs) { res.json(docs); } else { res.json(err); }
       });
   });
 
@@ -62,11 +62,7 @@ module.exports = function (passport) {
     User.find({role: ['patient', 'medecin']})
       .populate('address')
       .exec(function (err, docs) {
-        if (err) {
-          res.json(err);
-        } else {
-          res.json(docs);
-        }
+        if (!err && docs) { res.json(docs); } else { res.json(err); }
       });
   });
 
@@ -75,7 +71,7 @@ module.exports = function (passport) {
       .populate('user_id')
       .populate('general_doctor')
       .exec(function (err, docs) {
-        if (err) { res.json(err); } else { res.json(docs); }
+        if (!err && docs) { res.json(docs); } else { res.json(err); }
       });
   });
 
@@ -92,7 +88,7 @@ module.exports = function (passport) {
         populate: {path: 'user_id', populate: {path: 'address'}}
       })
       .exec(function (err, docs) {
-        if (err) { res.json(err); } else { res.json(docs); }
+        if (!err && docs) { res.json(docs); } else { res.json(err); }
       });
   });
 
@@ -107,14 +103,14 @@ module.exports = function (passport) {
         path: 'user_id'
       })
       .exec(function (err, docs) {
-        if (err) { res.json(err); } else { res.json(docs); }
+        if (!err && docs) { res.json(docs); } else { res.json(err); }
       });
   });
 
   router.get('/addresses', auth, function (req, res) {
     Address.find({})
       .exec(function (err, docs) {
-        if (err) { res.json(err); } else { res.json(docs); }
+        if (!err && docs) { res.json(docs); } else { res.json(err); }
       });
   });
 
@@ -122,7 +118,7 @@ module.exports = function (passport) {
     if (req.params.id) {
       Address.findById(req.params.id)
         .exec(function (err, docs) {
-          if (err) { res.json(err); } else { res.json(docs); }
+          if (!err && docs) { res.json(docs); } else { res.json(err); }
         });
     }
   });
@@ -131,7 +127,7 @@ module.exports = function (passport) {
   router.get('/users/:id', auth, function (req, res) {
     if (req.params.id) {
       User.findOne({_id: req.params.id}, function (err, docs) {
-        if (err) { res.json(err); } else { res.json(docs); }
+        if (!err && docs) { res.json(docs); } else { res.json(err); }
       });
     }
   });
@@ -140,11 +136,7 @@ module.exports = function (passport) {
   router.get('/users/byEmail/:email', auth, function (req, res) {
     if (req.params.email) {
       User.findOne({email: req.params.email}, function (err, docs) {
-        if (err) {
-          res.json(err);
-        } else {
-          res.json(docs);
-        }
+        if (!err && docs) { res.json(docs); } else { res.json(err); }
       });
     }
   });
@@ -209,11 +201,7 @@ module.exports = function (passport) {
     Doctor.find({user_id: req.params.id})
       .populate('user_id')
       .exec(function (err, docs) {
-        if (!err && docs) {
-          res.json(docs);
-        } else {
-          res.json(err);
-        }
+        if (!err && docs) { res.json(docs); } else { res.json(err); }
       });
   });
 
@@ -221,11 +209,7 @@ module.exports = function (passport) {
     Patient.find({user_id: req.params.id})
       .populate('user_id')
       .exec(function (err, docs) {
-        if (!err && docs) {
-          res.json(docs);
-        } else {
-          res.json(err);
-        }
+        if (!err && docs) { res.json(docs); } else { res.json(err); }
       });
   });
 
@@ -238,7 +222,7 @@ module.exports = function (passport) {
       })
       .populate('doctor')
       .exec(function (err, docs) {
-        if (err) { res.json(err); } else { res.json(docs); }
+        if (!err && docs) { res.json(docs); } else { res.json(err); }
       });
   });
 
