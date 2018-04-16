@@ -70,7 +70,7 @@ module.exports.register = function (req, res) {
 
 module.exports.login = function (req, res) {
   if (!req.body.email || !req.body.password) {
-    res.sendStatus(400);
+    return res.json(401, {err: 'email and password required'});
     // sendJSONresponse(res, 400, {
     //   'message': 'All fields required'
     // });
