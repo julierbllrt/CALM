@@ -14,7 +14,7 @@ var disponnibiliteSchema = mongoose.Schema ({
 var encKey = process.env.ENCKEY;
 var signKey = process.env.SIGNKEY;
 
-disponnibiliteSchema.plugin(encrypt, {encryptionKey: encKey, signingKey: signKey});
+disponnibiliteSchema.plugin(encrypt, {encryptionKey: encKey, signingKey: signKey, excludeFromEncryption: ['doctor']});
 
 // create the model for users and expose it to our app
 module.exports = mongoose.model('Disponnibilite', disponnibiliteSchema);

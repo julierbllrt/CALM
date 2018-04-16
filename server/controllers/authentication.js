@@ -6,8 +6,8 @@ var passport   = require('passport');
 // load up the user model
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
-//var Address = mongoose.model('Address');
-var Address = require('../models/address');
+var Address = mongoose.model('Address');
+//var Address = require('../models/address');
 var Doctor = require('../models/doctor');
 var Patient = require('../models/patient');
 var Building = require('../models/building');
@@ -38,7 +38,7 @@ module.exports.register = function(req, res) {
   user.password = user.generateHash(req.body.password);
   user.birth_date = req.body.birth_date;
   user.role = ['patient',req.body.role];
-  user.address = new Address(address);
+  user.address = address;
 
 
   // Verify that the email is not already used

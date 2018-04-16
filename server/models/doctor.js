@@ -18,7 +18,7 @@ var doctorSchema = mongoose.Schema ({
 var encKey = process.env.ENCKEY;
 var signKey = process.env.SIGNKEY;
 
-doctorSchema.plugin(encrypt, {encryptionKey: encKey, signingKey: signKey});
+doctorSchema.plugin(encrypt, {encryptionKey: encKey, signingKey: signKey, excludeFromEncryption: ['user_id', 'infrastructure', 'patients']});
 
 // create the model for users and expose it to our app
 module.exports = mongoose.model('Doctor', doctorSchema);
