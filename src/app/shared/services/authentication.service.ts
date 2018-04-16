@@ -63,8 +63,8 @@ export class AuthenticationService {
     }
   };
 
-  register(user): Observable<any> {
-    return this.http.post(environment.siteurl+'/api/register', user)
+  register(user, resp): Observable<any> {
+    return this.http.post(environment.siteurl+'/api/register', [user, resp])
       .map(res => res.json())
       .catch(error => {
         return Observable.throw(error.json());
