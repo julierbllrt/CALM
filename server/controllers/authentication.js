@@ -1,21 +1,23 @@
 /**
  * Created by Romain on 06/04/2017.
- * Updated by Xavier on 16/04/2018
  */
-const passport = require('passport');
-const mongoose = require('mongoose');
-
-// var Address = mongoose.model('Address');
+// load all the things we need
+var passport   = require('passport');
+// load up the user model
+var mongoose = require('mongoose');
+var User = mongoose.model('User');
+//var Address = mongoose.model('Address');
 var Address = require('../models/address');
 var Doctor = require('../models/doctor');
 var Patient = require('../models/patient');
 var Building = require('../models/building');
+var fs = require('fs');
 
-var User = mongoose.model('User');
 
-module.exports.register = function (req, res) {
+module.exports.register = function(req, res) {
   var address = new Address();
-  // user.profile_img.contentType = req.body.contentType;
+  //user.profile_img.data = fs.readFileSync(req.body.profile_img.data);
+  //user.profile_img.contentType = req.body.contentType;
   address.country = req.body.address.country;
   address.city = req.body.address.city;
   address.street_address = req.body.address.street_address;
@@ -23,8 +25,9 @@ module.exports.register = function (req, res) {
   address.latitude = req.body.address.latitude;
   address.longitude = req.body.address.longitude;
 
-  // Create address
-  address.save(err => {});
+  //Create address
+  address.save(function(err) {
+  });
 
   // console.log("req.body : ", req.body);
   var user = new User(); // Important : create the _id of the user
@@ -33,50 +36,60 @@ module.exports.register = function (req, res) {
   user.email = req.body.email;
   user.password = user.generateHash(req.body.password);
   user.birth_date = req.body.birth_date;
-  user.role = ['patient', req.body.role];
+  user.role = ['patient',req.body.role];
   user.address = new Address(address);
 
+
   // Verify that the email is not already used
-  User.findOne({email: user.email}, (err, newUser) => {
+  User.findOne({email:user.email} ,function (err, newUser) {
     if (err) return (err);
     if (newUser) {
       res.status(409);
-    } else {
-      user.save(() => {
-        let token = user.generateJwt();
-        res.status(200).json({ 'token': token });
+    }
+    else {
+      user.save(function(err) {
+        var token;
+        token = user.generateJwt();
+        res.status(200);
+        res.json({
+          "token" : token
+        });
       });
 
       switch (req.body.role) {
-        case 'medecin':
+        case "medecin":
           var doctor = new Doctor({user_id: user._id});
           var patient = new Patient({user_id: user._id});
-          doctor.save(err => {});
-          patient.save(err => {});
+          doctor.save(function(err) {
+          });
+          patient.save(function(err){
+          });
           break;
-        case 'patient':
-          var patientUn = new Patient({user_id: user._id});
-          patientUn.save(err => {});
+        case "patient":
+          var patient = new Patient({user_id: user._id});
+          patient.save(function(err) {
+          });
           break;
-        case 'building':
-          var building = new Building({user_id: user._id});
-          building.save(err => {});
-          console.log('Default case');
+        case "building":
+          var building = new Building({user_id:user._id});
+          building.save(function(err){});
+        default:
+          console.log("Default case");
           break;
       }
     }
   });
+
 };
 
-module.exports.login = function (req, res) {
-  if (!req.body.email || !req.body.password) {
-    res.sendStatus(400);
-    // sendJSONresponse(res, 400, {
-    //   'message': 'All fields required'
-    // });
-    // return '400';
+module.exports.login = function(req, res) {
+  if(!req.body.email || !req.body.password) {
+    sendJSONresponse(res, 400, {
+      "message": "All fields required"
+    });
+    return "400";
   }
-  passport.authenticate('local', function (err, user, info) {
+  passport.authenticate('local', function(err, user, info){
     var token;
     // If Passport throws/catches an error
     if (err) {
@@ -84,12 +97,17 @@ module.exports.login = function (req, res) {
       return;
     }
     // If a user is found
-    if (user) {
+    if(user){
       token = user.generateJwt();
-      res.status(200).json({ 'token': token });
+      res.status(200);
+      res.json({
+        "token" : token
+      });
     } else {
       // If user is not found
       res.status(401).json(info);
     }
   })(req, res);
+
 };
+

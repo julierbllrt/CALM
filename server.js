@@ -4,7 +4,6 @@ const express = require('express');
 const path = require('path');
 const https = require('https');
 const mongoose = require('mongoose');
-const mongooseConnect = require('./server/config/mongooseConnect');
 const passport = require('passport');
 const bodyParser = require('body-parser');
 const configDB = require('./server/config/database');
@@ -18,7 +17,8 @@ var options = {
 };
 
 // Connect to database
-mongooseConnect.connect(configDB.url, global.Promise);
+mongoose.connect(configDB.url);
+mongoose.Promise = global.Promise;
 app.use(passport.initialize());
 
 // var morgan = require('morgan');
@@ -68,42 +68,43 @@ app.use('/api', rappel);
 
 // Catch all other routes and return the index file
 app.get('*', (req, res) => res.sendFile(path.join(__dirname, 'dist/index.html')));
+app.set('port', port);
 
-https
-  .createServer(options, app)
-  .listen(port,
-    () => console.log(`The server is running on the port ${port}`));
+const server = https.createServer(options, app);
+server.listen(port, 511, () => console.log(`The server started on the port ${port}`));
 
 // [SH] Catch unauthorised errors
-app.use((err, res) => {
-  if (err.name === 'UnauthorizedError') { res.status(401).json({'message': err.name + ': ' + err.message}); }
+app.use(function (err, req, res, next) {
+  if (err.name === 'UnauthorizedError') {
+    res.status(401).json({'message': err.name + ': ' + err.message});
+  }
 });
 
-const {Strategy} = require('passport-local');
+var LocalStrategy = require('passport-local').Strategy;
 // load up the user model
-const User = mongoose.model('User');
-let optionsCredentials = {
+var User = mongoose.model('User');
+
+passport.use('local', new LocalStrategy({
   usernameField: 'email',
   passwordField: 'password',
-  passReqToCallback: true
-};
-
-/**
- * Permet d'authentifier l'utilisateur par rapport a ses identifiants
- * !!! ne pas supprimer le paramètre 'req' (request) !!!
- * c'est ce qui permet d'envoyer la demande de vérification :-)
- */
-passport.use('local',
-  new Strategy(optionsCredentials,
-    (req, email, password, done) => {
-      User.findOne({ email: email },
-        (err, user) => {
-          if (err) { return done(err); }
-          if (!user) { return done(null, false, { message: 'User not found' }); }
-          if (!user.validPassword(password)) { return done(null, false, { message: 'Password is wrong' }); }
-          return done(null, user); // If credentials are correct, return the user object
-        }
-      );
+  passReqToCallback: true},
+function (req, email, password, done) {
+  User.findOne({ email: email }, function (err, user) {
+    if (err) { return done(err); }
+    // Return if user not found in database
+    if (!user) {
+      return done(null, false, {
+        message: 'User not found'
+      });
     }
-  )
-);
+    // Return if password is wrong
+    if (!user.validPassword(password)) {
+      return done(null, false, {
+        message: 'Password is wrong'
+      });
+    }
+    // If credentials are correct, return the user object
+    return done(null, user);
+  });
+}
+));

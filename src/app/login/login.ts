@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit{
           this.submitted = true;
           this.authentication.saveToken(res.token);
           this.router.navigate(['/profile']);
-          location.reload(); // permet de recharger la page en se servant du cache
+          location.reload();
         }
       );
   }
