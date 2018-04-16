@@ -4,6 +4,7 @@ const express = require('express');
 const path = require('path');
 const https = require('https');
 const mongoose = require('mongoose');
+const mongooseConnect = require('./server/config/mongooseConnect');
 const passport = require('passport');
 const bodyParser = require('body-parser');
 const configDB = require('./server/config/database');
@@ -17,8 +18,7 @@ var options = {
 };
 
 // Connect to database
-mongoose.connect(configDB.url);
-mongoose.Promise = global.Promise;
+mongooseConnect.connect(configDB.url, global.Promise);
 app.use(passport.initialize());
 
 // var morgan = require('morgan');
