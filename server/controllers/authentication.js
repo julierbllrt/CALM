@@ -41,12 +41,12 @@ module.exports.register = function(req, res) {
   var address = new Address();
   //user.profile_img.data = fs.readFileSync(req.body.profile_img.data);
   //user.profile_img.contentType = req.body.contentType;
-  address.country = req.body.address.country;
-  address.city = req.body.address.city;
-  address.street_address = req.body.address.street_address;
-  address.num = req.body.address.num;
-  address.latitude = req.body.address.latitude;
-  address.longitude = req.body.address.longitude;
+  address.country = req.body[0].address.country;
+  address.city = req.body[0].address.city;
+  address.street_address = req.body[0].address.street_address;
+  address.num = req.body[0].address.num;
+  address.latitude = req.body[0].address.latitude;
+  address.longitude = req.body[0].address.longitude;
 
   //Create address
   address.save(function(err) {
@@ -54,13 +54,13 @@ module.exports.register = function(req, res) {
 
   // console.log("req.body : ", req.body);
   var user = new User(); // Important : create the _id of the user
-  user.first_name = req.body.first_name;
-  user.last_name = req.body.last_name;
-  user.email = req.body.email;
-  user.password = user.generateHash(req.body.password);
-  user.birth_date = req.body.birth_date;
-  user.role = ['patient',req.body.role];
-  user.address = address;
+  user.first_name = req.body[0].first_name;
+  user.last_name = req.body[0].last_name;
+  user.email = req.body[0].email;
+  user.password = user.generateHash(req.body[0].password);
+  user.birth_date = req.body[0].birth_date;
+  user.role = ['patient',req.body[0].role];
+  user.address = new Address(address);
 
   // Verify that the email is not already used
   User.findOne({email:user.email} ,function (err, newUser) {
@@ -81,7 +81,8 @@ module.exports.register = function(req, res) {
             });
           });
 
-          switch (req.body.role) {
+          switch (req.body[0].role) {
+
             case "medecin":
               var doctor = new Doctor({user_id: user._id});
               var patient = new Patient({user_id: user._id});
@@ -106,7 +107,7 @@ module.exports.register = function(req, res) {
           logger.info('New user registered :' + user._id);
         } else {
           res.json({"response": "Failed"});
-          //logger.info('User tried to register without captcha or failed it');
+          logger.info('User tried to register without captcha or failed it');
         }
       });
     }
