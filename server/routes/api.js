@@ -23,31 +23,30 @@ module.exports = function (passport) {
 
   /* GET api listing. */
   router.get('/', function (req, res) {
-    res.send("<h1>API Home</h1> <br>" +
+    res.send('<h1>API Home</h1> <br>' +
       "<a href='/api/users'>Show Users</a><br>" +
       "<a href='/api/doctors'>Show Doctors</a><br>" +
       "<a href='/api/patients'>Show Patients</a><br>" +
       "<a href='/api/addresses'>Show Addresses</a><br>" +
       "<a href='/api/treatments'>Show Treatments</a><br>" +
       "<a href='/api/post'>Show Posts</a><br>" +
-      "<a href='/api/rappel'>show rappel</a><br> "+
+      "<a href='/api/rappel'>show rappel</a><br> " +
       "<a href='/'>Return to the website</a>");
   });
-
 
   router.get('/user/:id', auth, function (req, res) {
     User.findOne({_id: req.params.id})
       .exec(function (err, docs) {
-        res.json(docs);
+        if (err) { res.json(err); } else { res.json(docs); }
       });
   });
 
-  //get all users
+  // get all users
   router.get('/users', auth, function (req, res) {
     User.find({})
       .populate('address')
       .exec(function (err, docs) {
-        res.json(docs);
+        if (err) { res.json(err); } else { res.json(docs); }
       });
   });
 
@@ -55,15 +54,15 @@ module.exports = function (passport) {
     Doctor.find({})
       .populate({path: 'user_id', populate: {path: 'address'}})
       .exec(function (err, docs) {
-        res.json(docs);
+        if (err) { res.json(err); } else { res.json(docs); }
       });
   });
 
   router.get('/users/doctor', auth, function (req, res) {
-    User.find({role: ['patient','medecin']})
+    User.find({role: ['patient', 'medecin']})
       .populate('address')
-      .exec(function(err, docs) {
-        if(err){
+      .exec(function (err, docs) {
+        if (err) {
           res.json(err);
         } else {
           res.json(docs);
@@ -76,7 +75,7 @@ module.exports = function (passport) {
       .populate('user_id')
       .populate('general_doctor')
       .exec(function (err, docs) {
-        res.json(docs);
+        if (err) { res.json(err); } else { res.json(docs); }
       });
   });
 
@@ -93,7 +92,7 @@ module.exports = function (passport) {
         populate: {path: 'user_id', populate: {path: 'address'}}
       })
       .exec(function (err, docs) {
-        res.json(docs);
+        if (err) { res.json(err); } else { res.json(docs); }
       });
   });
 
@@ -108,36 +107,36 @@ module.exports = function (passport) {
         path: 'user_id'
       })
       .exec(function (err, docs) {
-        res.json(docs);
+        if (err) { res.json(err); } else { res.json(docs); }
       });
   });
 
   router.get('/addresses', auth, function (req, res) {
     Address.find({})
       .exec(function (err, docs) {
-        res.json(docs);
+        if (err) { res.json(err); } else { res.json(docs); }
       });
   });
 
   router.get('/addresses/:id', auth, function (req, res) {
     if (req.params.id) {
       Address.findById(req.params.id)
-        .exec(function (err, user) {
-          res.json(user);
+        .exec(function (err, docs) {
+          if (err) { res.json(err); } else { res.json(docs); }
         });
     }
   });
 
-  //get one user by his id.
+  // get one user by his id.
   router.get('/users/:id', auth, function (req, res) {
     if (req.params.id) {
       User.findOne({_id: req.params.id}, function (err, docs) {
-        res.json(docs);
+        if (err) { res.json(err); } else { res.json(docs); }
       });
     }
   });
 
-  //get one user by his email
+  // get one user by his email
   router.get('/users/byEmail/:email', auth, function (req, res) {
     if (req.params.email) {
       User.findOne({email: req.params.email}, function (err, docs) {
@@ -170,7 +169,7 @@ module.exports = function (passport) {
     });
   });
 
-  function deleteCollectionsRelated(req) {
+  function deleteCollectionsRelated (req) {
     Patient.remove({user_id: req.params.id}, function (err) {
       if (err) return (err);
     });
@@ -192,7 +191,6 @@ module.exports = function (passport) {
 
   // Add a general doctor to a patient
   router.put('/patient/:id', auth, function (req, res, next) {
-
     // Add the patient in the patients list
     Doctor.findByIdAndUpdate(req.body._id, {$push: {patients: req.params.id}}, {new: true}, function (err, doctor) {
       if (err) return handleError(err);
@@ -206,7 +204,6 @@ module.exports = function (passport) {
       }
     });
   });
-
 
   router.get('/userToDoctor/:id', auth, function (req, res) {
     Doctor.find({user_id: req.params.id})
@@ -234,16 +231,17 @@ module.exports = function (passport) {
 
   // Get all search medecin
   router.get('/searchDoctor/:city', auth, function (req, res, next) {
-    var tempUser = User.find({role: ['patient', 'medecin']}).populate({
-      path: 'address',
-      match: {city: req.params.city}
-    }).populate('doctor').exec(function (err, docs) {
-      res.json(docs);
-    });
+    User.find({role: ['patient', 'medecin']})
+      .populate({
+        path: 'address',
+        match: {city: req.params.city}
+      })
+      .populate('doctor')
+      .exec(function (err, docs) {
+        if (err) { res.json(err); } else { res.json(docs); }
+      });
   });
 
-
+  // var tempUser
   return router;
-}
-
-
+};
