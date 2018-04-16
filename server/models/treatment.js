@@ -25,7 +25,7 @@ var treatmentSchema = mongoose.Schema ({
 var encKey = process.env.ENCKEY;
 var signKey = process.env.SIGNKEY;
 
-treatmentSchema.plugin(encrypt, {encryptionKey: encKey, signingKey: signKey});
+treatmentSchema.plugin(encrypt, {encryptionKey: encKey, signingKey: signKey, excludeFromEncryption: ['doctor']});
 
 // create the model for users and expose it to our app
 module.exports = mongoose.model('Treatment', treatmentSchema);

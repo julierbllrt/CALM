@@ -5,7 +5,7 @@ var mongoose = require('mongoose');
 var encrypt = require('mongoose-encryption');
 
 //define the schema
-var addressSchema = mongoose.Schema ({
+var addressSchema = new mongoose.Schema ({
   num : Number,
   street_address : String,
   city : String,

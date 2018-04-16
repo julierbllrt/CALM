@@ -85,7 +85,6 @@ export class RegisterComponent implements OnInit {
             "Prenez votre premier rendez-vous grâce à CALM ! \n\n Cordialement, \n\n CALM";
           this.mailService.sendMail(this.user.email, "[CALM] Confirmation d'inscription", confText)
             .subscribe( resp => {
-              console.log(resp);
               this.login(this.user.email, this.user.password);
               this.router.navigate(['/profile']);
               location.reload();
@@ -111,6 +110,7 @@ export class RegisterComponent implements OnInit {
         });
     this.submitted = false;
   }
+  
 }
 
 

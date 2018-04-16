@@ -16,6 +16,6 @@ var autorisationSchema = mongoose.Schema({
 var encKey = process.env.ENCKEY;
 var signKey = process.env.SIGNKEY;
 
-autorisationSchema.plugin(encrypt, {encryptionKey: encKey, signingKey: signKey});
+autorisationSchema.plugin(encrypt, {encryptionKey: encKey, signingKey: signKey, excludeFromEncryption: ['user', 'observer']});
 
 module.exports = mongoose.model('Autorisation',autorisationSchema);

@@ -6,8 +6,8 @@ var passport   = require('passport');
 // load up the user model
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
-//var Address = mongoose.model('Address');
-var Address = require('../models/address');
+var Address = mongoose.model('Address');
+//var Address = require('../models/address');
 var Doctor = require('../models/doctor');
 var Patient = require('../models/patient');
 var Building = require('../models/building');
@@ -17,7 +17,7 @@ var https = require('https');
 
 
 function verifyRecaptcha(key, callback){
-  var SECRET = "6Le2J08UAAAAANx-dc0SFiaDF5NJvPBrZmJShhNT";
+  var SECRET = process.env.CAPTCHAKEY;
   https.get("https://www.google.com/recaptcha/api/siteverify?secret=" + SECRET + "&response=" + key, function(res) {
     var data = "";
     res.on('data', function (chunk) {
@@ -62,7 +62,6 @@ module.exports.register = function(req, res) {
   user.role = ['patient',req.body[0].role];
   user.address = new Address(address);
 
-
   // Verify that the email is not already used
   User.findOne({email:user.email} ,function (err, newUser) {
     if (err) return (err);
@@ -83,6 +82,7 @@ module.exports.register = function(req, res) {
           });
 
           switch (req.body[0].role) {
+
             case "medecin":
               var doctor = new Doctor({user_id: user._id});
               var patient = new Patient({user_id: user._id});
@@ -107,7 +107,7 @@ module.exports.register = function(req, res) {
           logger.info('New user registered :' + user._id);
         } else {
           res.json({"response": "Failed"});
-          //logger.info('User tried to register without captcha or failed it');
+          logger.info('User tried to register without captcha or failed it');
         }
       });
     }

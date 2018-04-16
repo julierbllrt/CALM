@@ -20,7 +20,7 @@ var buildingSchema = mongoose.Schema ({
 var encKey = process.env.ENCKEY;
 var signKey = process.env.SIGNKEY;
 
-buildingSchema.plugin(encrypt, {encryptionKey: encKey, signingKey: signKey});
+buildingSchema.plugin(encrypt, {encryptionKey: encKey, signingKey: signKey, excludeFromEncryption: ['user_id', 'doctor_associated', 'address', 'services']});
 
 // create the model for users and expose it to our app
 module.exports = mongoose.model('Building', buildingSchema);

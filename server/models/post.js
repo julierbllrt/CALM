@@ -17,7 +17,7 @@ var postSchema = mongoose.Schema ({
 var encKey = process.env.ENCKEY;
 var signKey = process.env.SIGNKEY;
 
-postSchema.plugin(encrypt, {encryptionKey: encKey, signingKey: signKey});
+postSchema.plugin(encrypt, {encryptionKey: encKey, signingKey: signKey, excludeFromEncryption: ['sender', 'receiver']});
 
 // create the model for users and expose it to our app
 module.exports = mongoose.model('Post', postSchema);

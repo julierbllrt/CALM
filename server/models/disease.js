@@ -15,6 +15,6 @@ var diseaseSchema = mongoose.Schema({
 var encKey = process.env.ENCKEY;
 var signKey = process.env.SIGNKEY;
 
-diseaseSchema.plugin(encrypt, {encryptionKey: encKey, signingKey: signKey});
+diseaseSchema.plugin(encrypt, {encryptionKey: encKey, signingKey: signKey, excludeFromEncryption: ['patient', 'doctor']});
 
 module.exports = mongoose.model('Disease',diseaseSchema);

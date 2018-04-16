@@ -44,7 +44,7 @@ userSchema.methods.generateJwt = function() {
 var encKey = process.env.ENCKEY;
 var signKey = process.env.SIGNKEY;
 
-userSchema.plugin(encrypt, {encryptionKey: encKey, signingKey: signKey, excludeFromEncryption: ['email']});
+userSchema.plugin(encrypt, {encryptionKey: encKey, signingKey: signKey, excludeFromEncryption: ['email', 'address']});
 
 // create the model for users and expose it to our app
 module.exports = mongoose.model('User', userSchema);
