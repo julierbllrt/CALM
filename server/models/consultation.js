@@ -5,10 +5,10 @@ var mongoose = require('mongoose');
 var Patient = require('../models/patient');
 var Doctor = require('../models/doctor');
 
-//define the schema
-var consultationSchema = mongoose.Schema ({
-  patient : {type: mongoose.Schema.Types.ObjectId, ref: 'Patient'},
-  doctor : {type: mongoose.Schema.Types.ObjectId, ref: 'Doctor'},
+// define the schema
+var consultationSchema = mongoose.Schema({
+  patient: {type: mongoose.Schema.Types.ObjectId, ref: 'Patient'},
+  doctor: {type: mongoose.Schema.Types.ObjectId, ref: 'Doctor'},
   motif: String,
   date: Date
 });
