@@ -1,3 +1,6 @@
+html{
+  margin-top: 50px;
+}
 .mobile {
     display: none;
 }
@@ -39,6 +42,9 @@ form{
   width: 80%;
   margin-right: 10%;
   margin-left: 10% !important;
+}
+.topMargin{
+/*margin-top: 20px; */
 }
 
 
