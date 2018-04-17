@@ -6,7 +6,7 @@ import { UsersService } from './shared/services/users.service';
 import { AppComponent } from './app.component';
 import {HomeComponent} from "./home/home";
 import {ContactComponent} from "./contact/contact";
-import {AboutComponent} from "./about/about";
+import {AboutComponent, SafePipe} from "./about/about";
 import {LoginComponent} from "./login/login";
 import {PostComponent} from './post/post.component';
 import {NotFoundComponent} from "./not-found/not-found";
@@ -52,6 +52,7 @@ import { ReCaptchaModule } from 'angular2-recaptcha';
 @NgModule({
   declarations: [
     AppComponent,
+    SafePipe,
     HomeComponent,
     ContactComponent,
     AboutComponent,
