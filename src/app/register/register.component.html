@@ -4,140 +4,141 @@
   <div *ngIf="!submitted">
     <h3>Email already exist</h3>
   </div>
+  <div class="container-fluid">
+    <form (ngSubmit)="register()" #form="ngForm">
 
-  <form (ngSubmit)="register()" #form="ngForm">
-
-    <div class="form-group margin" [ngClass]="{
+      <div class="form-group margin" [ngClass]="{
          'has-error': first_name.invalid && first_name.touched,
          'has-success': first_name.valid && first_name.touched}">
-      <label class="control-label">Prénom</label>
-      <input type="text" class="form-control" name="first_name" required [(ngModel)]="user.first_name"
-              #first_name="ngModel">
-      <span class="help-block" *ngIf="first_name.invalid && first_name.touched">
+        <label class="control-label">Prénom</label>
+        <input type="text" class="form-control" name="first_name" required [(ngModel)]="user.first_name"
+                #first_name="ngModel">
+        <span class="help-block" *ngIf="first_name.invalid && first_name.touched">
                 Prénom requis
             </span>
-    </div>
+      </div>
 
-    <div class="form-group  margin" [ngClass]="{
+      <div class="form-group  margin" [ngClass]="{
          'has-error': last_name.invalid && last_name.touched,
          'has-success': last_name.valid && last_name.touched}">
-      <label class="control-label">Nom</label>
-      <input type="text" class="form-control" name="last_name" required [(ngModel)]="user.last_name"
-              #last_name="ngModel">
-      <span class="help-block" *ngIf="last_name.invalid && last_name.touched">
+        <label class="control-label">Nom</label>
+        <input type="text" class="form-control" name="last_name" required [(ngModel)]="user.last_name"
+                #last_name="ngModel">
+        <span class="help-block" *ngIf="last_name.invalid && last_name.touched">
                 Nom requis
             </span>
-    </div>
+      </div>
 
-    <div class="form-group margin" [ngClass]="{
+      <div class="form-group margin" [ngClass]="{
          'has-error': email.invalid && email.touched,
          'has-success': email.valid && email.touched}">
-      <label class="control-label">Email</label>
-      <input id="email" type="email" class="form-control" name="email" required [(ngModel)]="user.email"
-              #email="ngModel">
-      <span class="help-block" *ngIf="email.invalid && email.touched">
+        <label class="control-label">Email</label>
+        <input id="email" type="email" class="form-control" name="email" required [(ngModel)]="user.email"
+                #email="ngModel">
+        <span class="help-block" *ngIf="email.invalid && email.touched">
                 Email requis
             </span>
-    </div>
-    <div class="form-group margin">
-      <label class="control-label">Confirmation Email</label>
-      <input id="email_confirmation" type="email" class="form-control" name="email_confirmation"
-              required oninput="confirmEmail()">
-      <span class="help-block"  *ngIf="email.invalid && email.touched">
+      </div>
+      <div class="form-group margin">
+        <label class="control-label">Confirmation Email</label>
+        <input id="email_confirmation" type="email" class="form-control" name="email_confirmation"
+                required oninput="confirmEmail()">
+        <span class="help-block" *ngIf="email.invalid && email.touched">
                 Email requis
             </span>
-    </div>
+      </div>
 
-    <div class="form-group margin" [ngClass]="{
+      <div class="form-group margin" [ngClass]="{
          'has-error': password.invalid && password.touched,
          'has-success': password.valid && password.touched}">
-      <label class="control-label">Mot de passe</label>
-      <input id="password" type="password" class="form-control" name="password" required
-              [(ngModel)]="user.password" #password="ngModel">
-      <span class="help-block" *ngIf="password.invalid && password.touched">
+        <label class="control-label">Mot de passe</label>
+        <input id="password" type="password" class="form-control" name="password" required
+                [(ngModel)]="user.password" #password="ngModel">
+        <span class="help-block" *ngIf="password.invalid && password.touched">
                 Mot de passe requis
             </span>
-    </div>
-    <div class="form-group margin">
-      <label class="control-label">Confirmation Mot de passe</label>
-      <input id="password_confirmation" type="password" class="form-control" name="password_confirmation"
-              required oninput="confirmPasswd()">
-      <span class="help-block" *ngIf="password.invalid && password.touched">
+      </div>
+      <div class="form-group margin">
+        <label class="control-label">Confirmation Mot de passe</label>
+        <input id="password_confirmation" type="password" class="form-control" name="password_confirmation"
+                required oninput="confirmPasswd()">
+        <span class="help-block" *ngIf="password.invalid && password.touched">
                 Mot de passe requis
             </span>
-    </div>
+      </div>
 
-    <div class="form-group margin" [ngClass]="{
+      <div class="form-group margin" [ngClass]="{
          'has-error': password.invalid && password.touched,
          'has-success': password.valid && password.touched}">
-      <label class="control-label">Date de naissance</label>
-      <input type="date" class="form-control" name="birth_date" required [(ngModel)]="user.birth_date"
-              #birth_date="ngModel" max="2017-01-01">
-      <span class="help-block" *ngIf="birth_date.invalid && birth_date.touched">
+        <label class="control-label">Date de naissance</label>
+        <input type="date" class="form-control" name="birth_date" required [(ngModel)]="user.birth_date"
+                #birth_date="ngModel" max="2017-01-01">
+        <span class="help-block" *ngIf="birth_date.invalid && birth_date.touched">
                 Date de naissance requise
             </span>
-    </div>
+      </div>
 
-    <div class="form-group margin" [ngClass]="{
+      <div class="form-group margin" [ngClass]="{
          'has-error': role.invalid && role.touched,
          'has-success': role.valid && role.touched}">
-      <label class="control-label">Choisissez votre profil</label>
-      <select name="role" class="form-control" required [(ngModel)]="user.role" #role="ngModel">
+        <label class="control-label">Choisissez votre profil</label>
+        <select name="role" class="form-control" required [(ngModel)]="user.role" #role="ngModel">
               <option value="patient">Patient</option>
               <option value="medecin">Medecin</option>
               <!--<option value="building">Infrastructure</option>
               <option value="organisation">Organisation</option>-->
             </select>
-      <span class="help-block" *ngIf="role.invalid && role.touched">
+        <span class="help-block" *ngIf="role.invalid && role.touched">
               Profil requis
             </span>
-    </div>
+      </div>
 
-    <div class="form-group margin" [ngClass]="{
+      <div class="form-group margin" [ngClass]="{
          'has-error': country.invalid && country.touched,
          'has-success': country.valid && country.touched}">
-      <label class="control-label">Pays</label>
-      <input type="text" class="form-control" name="country" required [(ngModel)]="user.address.country"
-              #country="ngModel">
-    </div>
+        <label class="control-label">Pays</label>
+        <input type="text" class="form-control" name="country" required [(ngModel)]="user.address.country"
+                #country="ngModel">
+      </div>
 
-    <div class="form-group margin">
-      <label class="control-label">Numéro de rue</label>
-      <input type="text" class="form-control" name="num" required [(ngModel)]="user.address.num"
-              #num="ngModel">
-    </div>
+      <div class="form-group margin">
+        <label class="control-label">Numéro de rue</label>
+        <input type="text" class="form-control" name="num" required [(ngModel)]="user.address.num"
+                #num="ngModel">
+      </div>
 
-    <div class="form-group margin">
-      <label class="control-label">Rue</label>
-      <input type="text" class="form-control" name="street_address" required [(ngModel)]="user.address.street_address"
-              #street_adress="ngModel">
-    </div>
+      <div class="form-group margin">
+        <label class="control-label">Rue</label>
+        <input type="text" class="form-control" name="street_address" required [(ngModel)]="user.address.street_address"
+                #street_adress="ngModel">
+      </div>
 
-    <div class="form-group margin">
-      <label class="control-label">Ville</label>
-      <input type="text" class="form-control" name="city" required [(ngModel)]="user.address.city"
-              #city="ngModel">
-    </div>
+      <div class="form-group margin">
+        <label class="control-label">Ville</label>
+        <input type="text" class="form-control" name="city" required [(ngModel)]="user.address.city"
+                #city="ngModel">
+      </div>
 
-    <!--//google map pour preciser l'address-->
-    <sebm-google-map style="float=right;" class="agm-map " [latitude]="user.address.latitude"
-            [longitude]="user.address.longitude" [zoom]="zoom*2" *ngIf="user.address.latitude !== 0">
-      <sebm-google-map-marker [latitude]="user.address.latitude" [longitude]="user.address.longitude">
-      </sebm-google-map-marker>
-      <!-- marker ne s'afficha pas -->
-    </sebm-google-map>
+      <!--//google map pour preciser l'address-->
+      <sebm-google-map style="float=right;" class="agm-map " [latitude]="user.address.latitude"
+              [longitude]="user.address.longitude" [zoom]="zoom*2" *ngIf="user.address.latitude !== 0">
+        <sebm-google-map-marker [latitude]="user.address.latitude" [longitude]="user.address.longitude">
+        </sebm-google-map-marker>
+        <!-- marker ne s'afficha pas -->
+      </sebm-google-map>
 
-    <div style="display:inline;" *ngIf="user.address.city !== '' && user.address.street_address !== '' && user.address.num !== 0">
-      {{displayAddress()}}
-    </div>
+      <div style="display:inline;" *ngIf="user.address.city !== '' && user.address.street_address !== '' && user.address.num !== 0">
+        {{displayAddress()}}
+      </div>
 
-    <div class="form-group margin">
-      <re-captcha site_key="6Le2J08UAAAAAGBY8-r2rg70Z4-ySnqdi7ySOuNz"></re-captcha>
-    </div>
+      <div class="form-group margin">
+        <re-captcha site_key="6Le2J08UAAAAAGBY8-r2rg70Z4-ySnqdi7ySOuNz"></re-captcha>
+      </div>
 
-    <div class="form-group margin">
-      <button type="submit" class="btn btn-primary" [disabled]="form.invalid">S'inscrire</button>
-    </div>
+      <div class="form-group margin">
+        <button type="submit" class="btn btn-primary btn-block" [disabled]="form.invalid">S'inscrire</button>
+      </div>
 
-  </form>
+    </form>
+  </div>
 </div>
