@@ -45,9 +45,10 @@ export class GoogleMapComponent implements OnInit {
   rechercheClick(searchText: string) : void {
     if(searchText != '')
     {
+      let searchKey:string = searchText+" "+"hopital";
       this.response=[];
-      this.searchMedecins(searchText);
-      console.log(searchText);
+      this.searchMedecins(searchKey);
+      console.log(searchKey);
     }
     else
     {
@@ -81,11 +82,12 @@ export class GoogleMapComponent implements OnInit {
   }
 
   searchMedecins(searchText: string): void {
+    let searchKey:string = searchText+" "+"hopital";
 
     this.doctorSearch.getAllUserDoctor()
       .subscribe( usersDoctor => {
 
-        this.googlemapsService.convertAddresstoCode(searchText)
+        this.googlemapsService.convertAddresstoCode(searchKey)
           .subscribe( resp => {
             const position = resp.results[0].geometry.location;
             if (usersDoctor) {
