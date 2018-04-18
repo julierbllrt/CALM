@@ -1,10 +1,13 @@
+/**
+ * Created by ISEN on 12/04/2017.
+ */
 var mongoose = require('mongoose');
 var Doctor = require('../models/doctor');
 var encrypt = require('mongoose-encryption');
 
-//define the schema
-var disponnibiliteSchema = mongoose.Schema ({
-  doctor : {type: mongoose.Schema.Types.ObjectId, ref: 'Doctor'},
+// define the schema
+var disponnibiliteSchema = mongoose.Schema({
+  doctor: {type: mongoose.Schema.Types.ObjectId, ref: 'Doctor'},
   jour: Number,
   mois: Number,
   an: Number,

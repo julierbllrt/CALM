@@ -1,6 +1,7 @@
 
 // Get dependencies
 const express = require('express');
+const cookieParser = require('cookie-parser');
 const path = require('path');
 const https = require('https');
 const mongoose = require('mongoose');
@@ -8,8 +9,14 @@ const passport = require('passport');
 const bodyParser = require('body-parser');
 const configDB = require('./server/config/database');
 const fs = require('fs');
+const hpp = require('hpp');
+const helmet = require('helmet');
+const csrf = require('csurf');
 
 const port = process.env.PORT || '3000';
+
+var csrfProtection = csrf({cookie: true});
+var parseForm = bodyParser.urlencoded({ extended: false });
 var app = express();
 var options = {
   key: fs.readFileSync('server/cert/calm-key.pem'),
@@ -48,11 +55,15 @@ const autorisation = require('./server/routes/autorisation')(passport);
 const rappel = require('./server/routes/rappel')(passport);
 
 // Parsers for POST data
+app.use(cookieParser());
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-
 // Point static path to dist
 app.use(express.static(path.join(__dirname, 'dist')));
+app.use(parseForm);
+
+// Solutions de securite
+app.use(hpp());
+app.use(helmet());
 
 // Set our api routes
 app.use('/api', api);
@@ -70,8 +81,22 @@ app.use('/api', rappel);
 app.get('*', (req, res) => res.sendFile(path.join(__dirname, 'dist/index.html')));
 app.set('port', port);
 
-const server = https.createServer(options, app);
-server.listen(port, 511, () => console.log(`The server started on the port ${port}`));
+app.use((req, res, next) => {
+  res.cookie('XSRF-TOKEN', req.csrfToken());
+  return next();
+});
+
+https
+  .createServer(options, app)
+  .listen(port, () => console.log(`The server started on https://localhost:${port}`));
+
+app.get('/login', csrfProtection, (req, res) => {
+  res.render('login', { csrfToken: req.csrfToken() });
+})
+  .post('/profile', parseForm, csrfProtection, (req, res) => {
+    console.log('Request Body:', req.body);
+    res.send('Data is being processed');
+  });
 
 // [SH] Catch unauthorised errors
 app.use(function (err, req, res, next) {
@@ -88,7 +113,7 @@ passport.use('local', new LocalStrategy({
   usernameField: 'email',
   passwordField: 'password',
   passReqToCallback: true},
-function (req, email, password, done) {
+function (req, email, password, done) { // ne pas supprimer req, vital pour l'authentification
   User.findOne({ email: email }, function (err, user) {
     if (err) { return done(err); }
     // Return if user not found in database

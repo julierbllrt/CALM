@@ -7,13 +7,14 @@ var Patient = require('../models/patient');
 var Building = require('./building');
 var encrypt = require('mongoose-encryption');
 
-//define the schema
-var doctorSchema = mongoose.Schema ({
-  user_id : {type: mongoose.Schema.Types.ObjectId, ref:'User'},
-  phone : String,
-  infrastructure: {type:[mongoose.Schema.Types.ObjectId], ref:'Building'},
-  patients : {type: [mongoose.Schema.Types.ObjectId], ref:'Patient'}
+// define the schema
+var doctorSchema = mongoose.Schema({
+  user_id: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+  phone: String,
+  infrastructure: {type: [mongoose.Schema.Types.ObjectId], ref: 'Building'},
+  patients: {type: [mongoose.Schema.Types.ObjectId], ref: 'Patient'}
 });
+
 
 var encKey = process.env.ENCKEY;
 var signKey = process.env.SIGNKEY;

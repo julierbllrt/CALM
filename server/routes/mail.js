@@ -1,4 +1,4 @@
-module.exports = function(passport) {
+module.exports = function (passport) {
   const express = require('express');
   const router = express.Router();
   var jwt = require('express-jwt');
@@ -19,7 +19,7 @@ module.exports = function(passport) {
     }
   });
 
-  router.post('/mail/test', auth, function(req, res){
+  router.post('/mail/test', auth, function (req, res) {
     console.log('From mail API : we are going to send the mail.');
     var mailOptions = {
       from: 'calm.coelab@gmail.com',
@@ -28,7 +28,7 @@ module.exports = function(passport) {
       text: 'YES !'
     };
 
-    transporter.sendMail(mailOptions, function(error, info) {
+    transporter.sendMail(mailOptions, function (error, info) {
       if (error) {
         console.log(error);
       } else {
@@ -37,7 +37,7 @@ module.exports = function(passport) {
     });
   });
 
-  router.post('/mail', auth, function(req, res) {
+  router.post('/mail', auth, function (req, res) {
     var mailOptions = {
       from: 'calm.coelab@gmail.com',
       to: req.body.to,
@@ -45,7 +45,7 @@ module.exports = function(passport) {
       text: req.body.text
     };
 
-    transporter.sendMail(mailOptions, function(error, info) {
+    transporter.sendMail(mailOptions, function (error, info) {
       if (error) {
         console.log(error);
       } else {
