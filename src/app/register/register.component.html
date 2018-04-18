@@ -6,12 +6,7 @@
   </div>
   <div class="container-fluid">
     <form (ngSubmit)="register()" #form="ngForm">
-<<<<<<< Temporary merge branch 1
-
       <div class="form-group margin" [ngClass]="{
-=======
-        <div class="form-group margin" [ngClass]="{
->>>>>>> Temporary merge branch 2
          'has-error': first_name.invalid && first_name.touched,
          'has-success': first_name.valid && first_name.touched}">
         <label class="control-label">Prénom</label>
@@ -137,7 +132,6 @@
 
       <div class="form-group margin">
         <re-captcha site_key="6Le2J08UAAAAAGBY8-r2rg70Z4-ySnqdi7ySOuNz"></re-captcha>
-<<<<<<< Temporary merge branch 1
       </div>
 
       <div class="form-group margin">
@@ -146,13 +140,5 @@
 
     </form>
   </div>
-=======
-        <br/>
-        <div class="form-group margin">
-            <button type="submit" class="btn btn-primary" [disabled]="form.invalid">S'inscrire</button>
-        </div>
 
-    </form>
-
->>>>>>> Temporary merge branch 2
 </div>
