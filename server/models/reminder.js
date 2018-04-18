@@ -4,20 +4,20 @@
 var mongoose = require('mongoose');
 var encrypt = require('mongoose-encryption');
 
-//define the schema
-var reminderSchema = mongoose.Schema ({
+// define the schema
+var reminderSchema = mongoose.Schema({
   userId: String,
   rappel: {
     name: String,
     quantity: String,
-    takingState:String,
+    takingState: String,
     frequence: String,
     typeFrequence: String,
     info: String
   },
   traitementId: String,
-  date : String,
-  time : String,
+  date: String,
+  time: String,
   expire: Boolean
 
 });

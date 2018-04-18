@@ -6,10 +6,10 @@ var Patient = require('../models/patient');
 var Doctor = require('../models/doctor');
 var encrypt = require('mongoose-encryption');
 
-//define the schema
-var consultationSchema = mongoose.Schema ({
-  patient : {type: mongoose.Schema.Types.ObjectId, ref: 'Patient'},
-  doctor : {type: mongoose.Schema.Types.ObjectId, ref: 'Doctor'},
+// define the schema
+var consultationSchema = mongoose.Schema({
+  patient: {type: mongoose.Schema.Types.ObjectId, ref: 'Patient'},
+  doctor: {type: mongoose.Schema.Types.ObjectId, ref: 'Doctor'},
   motif: String,
   date: Date
 });

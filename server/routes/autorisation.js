@@ -9,16 +9,12 @@ module.exports = function (passport) {
 
   var Autorisation = require('../models/autorisation');
 
-  //Get the post autorisation
+  // Get the post autorisation
   router.get('/autorisation/post/:id', auth, function (req, res, next) {
     Autorisation.find({user: req.params.id, subject: 'POST'})
       .populate('observer')
       .exec(function (err, docs) {
-        if (!err && docs) {
-          res.json(docs);
-        } else {
-          res.json(err);
-        }
+        if (!err && docs) { res.json(docs); } else { res.json(err); }
       });
   });
 
@@ -26,41 +22,29 @@ module.exports = function (passport) {
     Autorisation.find({user: req.params.id, subject: 'RDV'})
       .populate('observer')
       .exec(function (err, docs) {
-        if (!err && docs) {
-          res.json(docs);
-        } else {
-          res.json(err);
-        }
-      })
+        if (!err && docs) { res.json(docs); } else { res.json(err); }
+      });
   });
 
-  //Get the autorisations for a user
+  // Get the autorisations for a user
   router.get('/autorisation/:id', auth, function (req, res, next) {
     Autorisation.find({user: req.params.id})
       .populate('observer')
       .exec(function (err, docs) {
-        if (!err && docs) {
-          res.json(docs);
-        } else {
-          res.json(err);
-        }
+        if (!err && docs) { res.json(docs); } else { res.json(err); }
       });
   });
 
-//get the demande of autorisation
+  // get the demande of autorisation
   router.get('/autorisation/demand/:id', auth, function (req, res, next) {
     Autorisation.find({observer: req.params.id, confirm: false})
       .populate('user')
       .exec(function (err, docs) {
-        if (!err && docs) {
-          res.json(docs);
-        } else {
-          res.json(err);
-        }
+        if (!err && docs) { res.json(docs); } else { res.json(err); }
       });
   });
 
-  //add an autorisation
+  // add an autorisation
   router.put('/autorisation/', auth, function (req, res, next) {
     var autorisation = new Autorisation();
     autorisation.user = req.body.user;
@@ -78,9 +62,9 @@ module.exports = function (passport) {
     });
   });
 
-  //delete autorisation
+  // delete autorisation
   router.delete('/autorisation/:id', auth, function (req, res) {
-    console.log('delete : ' + req.params.id)
+    console.log('delete : ' + req.params.id);
     Autorisation.remove({_id: req.params.id}, function (err) {
       if (err) {
         res.json(err);
@@ -90,7 +74,6 @@ module.exports = function (passport) {
     });
   });
 
-
   router.get('/autorisation/refuse/:demand_id', auth, function (req, res, next) {
     Autorisation.update({
       _id: req.params.demand_id
@@ -98,7 +81,7 @@ module.exports = function (passport) {
       confirm: 'True',
       valide: 'False'
     }).exec(function (err, docs) {
-      console.log("erro info" + err);
+      console.log('erro info' + err);
       res.json(docs);
     });
   });
@@ -110,7 +93,7 @@ module.exports = function (passport) {
       confirm: 'True',
       valide: 'True'
     }).exec(function (err, docs) {
-      console.log("erro info" + err);
+      console.log('erro info' + err);
       res.json(docs);
     });
   });
@@ -121,7 +104,7 @@ module.exports = function (passport) {
       user: req.params.user_id
     }).populate('observer')
       .exec(function (err, docs) {
-        console.log("erro info" + err);
+        console.log('erro info' + err);
         res.json(docs);
       });
   });
@@ -131,11 +114,10 @@ module.exports = function (passport) {
       observer: req.params.user_id
     }).populate('user')
       .exec(function (err, docs) {
-        console.log("erro info" + err);
+        console.log('erro info' + err);
         res.json(docs);
       });
   });
-
 
   return router;
 };
