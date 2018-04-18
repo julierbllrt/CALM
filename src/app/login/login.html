@@ -1,15 +1,11 @@
 <div class="jumbotron text-center">
 
   <div>
-
-
-    <h4>
-            Connexion
-          </h4>
+    <h4>Connexion</h4>
   </div>
 
+  <div class="container-fluid">
 
-  <div>
     <form (ngSubmit)="login()" *ngIf="!submitted" #form="ngForm" class="form-horizontal"
             role="form">
       <div class="form-group" [ngClass]="{

@@ -1,13 +1,13 @@
-import {Component, OnInit} from '@angular/core';
-import {TreatmentService} from '../../shared/services/treatment.service';
-import {AuthenticationService} from '../../shared/services/authentication.service';
-import {Http, Headers, RequestOptions, Jsonp} from '@angular/http';
-import {JsonpModule} from '@angular/http';
+import { Component, OnInit } from '@angular/core';
+import { TreatmentService } from '../../shared/services/treatment.service';
+import { AuthenticationService } from '../../shared/services/authentication.service';
+import { Http, Headers, RequestOptions, Jsonp } from '@angular/http';
+import { JsonpModule } from '@angular/http';
 import 'rxjs/add/operator/map';
-import {Treatment} from '../../shared/models/treatment';
-import {User} from '../../shared/models/user';
-import {UsersService} from '../../shared/services/users.service';
-import {ActivatedRoute, Params} from '@angular/router';
+import { Treatment } from '../../shared/models/treatment';
+import { User } from '../../shared/models/user';
+import { UsersService } from '../../shared/services/users.service';
+import { ActivatedRoute, Params } from '@angular/router';
 
 
 @Component({
@@ -25,9 +25,13 @@ export class CurrentTreatmentComponent implements OnInit {
   searchList: {}[];
   treatmentInfo: {};
   interaction: {}[];
+  treatmentDetail: Treatment;
 
-  constructor(private http: Http, private treatment: TreatmentService, private usersService: UsersService, private route: ActivatedRoute,) {
 
+
+
+  constructor(private http: Http, private treatment: TreatmentService,
+    private usersService: UsersService, private route: ActivatedRoute, ) {
 
   }
 
@@ -59,14 +63,15 @@ export class CurrentTreatmentComponent implements OnInit {
     this.treatment.getUserTreatment(this.userId).subscribe(
       data => {
         this.treatments = data;
-        this.treatments.forEach(function (element) {
+        this.treatments.forEach(function(element) {
           this.treatment.getTreatmentInfo(element.codeCIS).subscribe(response => {
-              const tmp = JSON.parse(response);
-              if (tmp != null) {
+            const tmp = JSON.parse(response);
+            if (tmp != null) {
 
-                element.substances = tmp.compositions[0].substancesActives.map(a => a.denominationSubstance);
-              }
-            },
+              element.substances = tmp.compositions[0].substancesActives.map(a =>
+                a.denominationSubstance);
+            }
+          },
             error => console.log(error));
           if (element.start != null) {
             element.start = new Date(element.start);
@@ -85,11 +90,18 @@ export class CurrentTreatmentComponent implements OnInit {
     );
   };
 
+  getMedicamentInfo(bob: Treatment) {
+    console.log("getmedicamentinfo");
+  //  console.log(bob);
+    this.treatmentDetail = bob;
+    console.log(this.treatmentDetail);
+
+  }
+
   getTreatmentInfo(treatment: Treatment) {
     this.treatment.getTreatmentInfo(treatment.codeCIS).subscribe(data => {
-        this.treatmentInfo = JSON.parse(data);
-        console.log(this.treatmentInfo);
-      },
+      this.treatmentInfo = JSON.parse(data);
+    },
       error => console.log(error));
   }
 

@@ -19,13 +19,13 @@ import { TrimValueAccessorModule } from 'ng-trim-value-accessor'; // Remove the 
 import { MedicalFileComponent } from './medical-file/medical-file.component';
 import { DoctorProfileComponent } from './medical-file/doctor-profile/doctor-profile.component';
 import { CurrentTreatmentComponent } from './medical-file/current-treatment/current-treatment.component';
-import {MedicalFileService} from "./shared/services/medical-file.service";
-import {SettingsComponent} from "./profile/settings/settings.component";
+import { MedicalFileService} from "./shared/services/medical-file.service";
+import { SettingsComponent} from "./profile/settings/settings.component";
 import { CalendarComponent } from './medical-file/calendar/calendar.component';
 import { ReminderComponent } from './medical-file/reminder/reminder.component';
 import { DoctorSpaceComponent } from './doctor-space/doctor-space.component';
 import { BuildingSpaceComponent } from './building-space/building-space.component';
-import {DoctorSpaceService} from './shared/services/doctor-space.service';
+import { DoctorSpaceService} from './shared/services/doctor-space.service';
 import { GoogleMapComponent } from './patient_rdv/google-map/google-map.component';
 import{ AgmCoreModule } from '@agm/core';
 import { PostsComponent } from './medical-file/posts/posts.component';

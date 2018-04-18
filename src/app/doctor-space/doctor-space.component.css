@@ -14,3 +14,14 @@
   padding: 20px;
 }
 
+.card {
+  margin-top: 10px;
+}
+
+.btn {
+  margin-bottom: 0px;
+}
+
+.card-title {
+  font-weight: bold;
+}

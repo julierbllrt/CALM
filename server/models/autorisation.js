@@ -3,6 +3,7 @@
  */
 var mongoose = require('mongoose');
 var User = require('../models/user');
+var encrypt = require('mongoose-encryption');
 
 var autorisationSchema = mongoose.Schema({
   user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
@@ -15,4 +16,10 @@ var autorisationSchema = mongoose.Schema({
 
 });
 
-module.exports = mongoose.model('Autorisation', autorisationSchema);
+
+var encKey = process.env.ENCKEY;
+var signKey = process.env.SIGNKEY;
+
+autorisationSchema.plugin(encrypt, {encryptionKey: encKey, signingKey: signKey, excludeFromEncryption: ['user', 'observer']});
+
+module.exports = mongoose.model('Autorisation',autorisationSchema);

@@ -50,6 +50,10 @@ button>a, button>a:hover{
   cursor: pointer;
   border: none;
 }
+.dropdown-menu>li>a{
+  font-size: 18px;
+}
+
 .mobile .dropdown-menu>li>a{
   color: White;
 }
