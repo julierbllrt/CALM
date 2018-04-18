@@ -1,6 +1,7 @@
 
 var mongoose = require('mongoose');
 var User = require('../models/user');
+var encrypt = require('mongoose-encryption');
 
 //define the schema
 var logSchema = mongoose.Schema ({
@@ -11,6 +12,10 @@ var logSchema = mongoose.Schema ({
   date: {type: Date, default: Date.now}
 });
 
+var encKey = process.env.ENCKEY;
+var signKey = process.env.SIGNKEY;
+
+logSchema.plugin(encrypt, {encryptionKey: encKey, signingKey: signKey, excludeFromEncryption: ['user']});
 
 // create the model for users and expose it to our app
 module.exports = mongoose.model('Log', logSchema);

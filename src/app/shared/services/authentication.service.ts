@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {Http, Headers, RequestOptions} from '@angular/http';
 import {Observable} from "rxjs";
 import 'rxjs/Rx';
+import { environment } from '../../../environments/environment';
 
 @Injectable()
 export class AuthenticationService {
@@ -62,8 +63,8 @@ export class AuthenticationService {
     }
   };
 
-  register(user): Observable<any> {
-    return this.http.post('https://localhost:3000/api/register', user)
+  register(user, resp): Observable<any> {
+    return this.http.post(environment.siteurl+'/api/register', [user, resp])
       .map(res => res.json())
       .catch(error => {
         return Observable.throw(error.json());
@@ -71,7 +72,7 @@ export class AuthenticationService {
   }
 
   login(user): Observable<any> {
-    return this.http.post('https://localhost:3000/api/login', user)
+    return this.http.post( environment.siteurl+'/api/login', user)
       .map(res => res.json())
       .catch(error => {
         return Observable.throw(error.json());

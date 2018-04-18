@@ -4,6 +4,7 @@
 var mongoose = require('mongoose');
 var Patient = require('../models/patient');
 var Doctor = require('../models/doctor');
+var encrypt = require('mongoose-encryption');
 
 //define the schema
 var consultationSchema = mongoose.Schema ({
@@ -12,6 +13,11 @@ var consultationSchema = mongoose.Schema ({
   motif: String,
   date: Date
 });
+
+var encKey = process.env.ENCKEY;
+var signKey = process.env.SIGNKEY;
+
+consultationSchema.plugin(encrypt, {encryptionKey: encKey, signingKey: signKey, excludeFromEncryption: ['patient', 'doctor']});
 
 // create the model for users and expose it to our app
 module.exports = mongoose.model('Consultation', consultationSchema);
