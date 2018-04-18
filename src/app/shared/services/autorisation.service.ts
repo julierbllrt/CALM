@@ -4,13 +4,14 @@ import {Post} from "../models/post";
 import {Observable} from "rxjs";
 import {AuthenticationService} from "./authentication.service";
 import {Autorisation} from "../models/autorisation";
+import {environment} from "../../../environments/environment";
 
 @Injectable()
 export class AutorisationService {
   url: string;
 
   constructor(private http: Http, private authentication: AuthenticationService) {
-    this.url = 'https://localhost:3000/api/';
+    this.url = environment.siteurl+'/api/';
   }
 
   addAutorisation(autorisation: Autorisation) {

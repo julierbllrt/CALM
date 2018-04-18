@@ -7,6 +7,7 @@
   <div class="container-fluid">
     <form (ngSubmit)="register()" #form="ngForm">
 
+
       <div class="form-group margin" [ngClass]="{
          'has-error': first_name.invalid && first_name.touched,
          'has-success': first_name.valid && first_name.touched}">
@@ -96,49 +97,40 @@
       <div class="form-group margin" [ngClass]="{
          'has-error': country.invalid && country.touched,
          'has-success': country.valid && country.touched}">
-        <label class="control-label">Pays</label>
-        <input type="text" class="form-control" name="country" required [(ngModel)]="user.address.country"
-                #country="ngModel">
-      </div>
+            <label class="control-label">Pays</label>
+            <input type="text" class="form-control" name="country" required [(ngModel)]="user.address.country" #country="ngModel">
+        </div>
 
-      <div class="form-group margin">
-        <label class="control-label">Numéro de rue</label>
-        <input type="text" class="form-control" name="num" required [(ngModel)]="user.address.num"
-                #num="ngModel">
-      </div>
+        <div class="form-group margin">
+            <label class="control-label">Numéro de rue</label>
+            <input type="text" class="form-control" name="num" required [(ngModel)]="user.address.num" #num="ngModel">
+        </div>
 
-      <div class="form-group margin">
-        <label class="control-label">Rue</label>
-        <input type="text" class="form-control" name="street_address" required [(ngModel)]="user.address.street_address"
-                #street_adress="ngModel">
-      </div>
+        <div class="form-group margin">
+            <label class="control-label">Rue</label>
+            <input type="text" class="form-control" name="street_address" required [(ngModel)]="user.address.street_address" #street_adress="ngModel">
+        </div>
 
-      <div class="form-group margin">
-        <label class="control-label">Ville</label>
-        <input type="text" class="form-control" name="city" required [(ngModel)]="user.address.city"
-                #city="ngModel">
-      </div>
+        <div class="form-group margin">
+            <label class="control-label">Ville</label>
+            <input type="text" class="form-control" name="city" required [(ngModel)]="user.address.city" #city="ngModel">
+        </div>
 
-      <!--//google map pour preciser l'address-->
-      <sebm-google-map style="float=right;" class="agm-map " [latitude]="user.address.latitude"
-              [longitude]="user.address.longitude" [zoom]="zoom*2" *ngIf="user.address.latitude !== 0">
-        <sebm-google-map-marker [latitude]="user.address.latitude" [longitude]="user.address.longitude">
-        </sebm-google-map-marker>
-        <!-- marker ne s'afficha pas -->
-      </sebm-google-map>
+        <!--//google map pour preciser l'address-->
+        <agm-map style="float=right;" class="agm-map " [latitude]="user.address.latitude" [longitude]="user.address.longitude" [zoom]="zoom*2" *ngIf="user.address.latitude !== 0">
+            <agm-marker [latitude]="user.address.latitude" [longitude]="user.address.longitude">
+            </agm-marker> <!-- marker ne s'afficha pas -->
+        </agm-map>
 
-      <div style="display:inline;" *ngIf="user.address.city !== '' && user.address.street_address !== '' && user.address.num !== 0">
-        {{displayAddress()}}
-      </div>
-
-      <div class="form-group margin">
+        <div style="display:inline;" *ngIf="user.address.city !== '' && user.address.street_address !== '' && user.address.num !== 0">
+            {{displayAddress()}}
+        </div>
         <re-captcha site_key="6Le2J08UAAAAAGBY8-r2rg70Z4-ySnqdi7ySOuNz"></re-captcha>
-      </div>
-
-      <div class="form-group margin">
-        <button type="submit" class="btn btn-primary btn-block" [disabled]="form.invalid">S'inscrire</button>
-      </div>
+        <br/>
+        <div class="form-group margin">
+            <button type="submit" class="btn btn-primary btn-block" [disabled]="form.invalid">S'inscrire</button>
+        </div>
 
     </form>
-  </div>
+
 </div>

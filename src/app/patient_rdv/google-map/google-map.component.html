@@ -8,20 +8,19 @@
       <button type="button" class="btn btn-danger" (click)="rechercheClick(searchBox.value)">Rechercher</button>
     </div>
 
-    <sebm-google-map class="agm-map" [usePanning]="true" [latitude]="lat" [longitude]="lng"
-            [zoom]="zoom" (setZoom)="setZoom(2)" (mapClick)="mapClick()" (zoomChange)="zoomChange()">
-      <div *ngIf="response.length!=0">
-        <sebm-google-map-marker *ngFor="let n of response" [latitude]=n.address.latitude
-                [longitude]=n.address.longitude (markerClick)="clikedMark(n._id)">
-          <sebm-google-map-info-window [isOpen]="n.isDisplay">
-            <div>
-              <h3>Doctor: {{n.last_name}} {{n.first_name}}</h3>
-              <p>address: {{n.address.num}},{{n.address.street_address}}</p>
-              <button (click)="newDoctorRdv(n)">Prendez rendez-vous</button>
-            </div>
-          </sebm-google-map-info-window>
-        </sebm-google-map-marker>
-      </div>
-    </sebm-google-map>
+<agm-map class="agm-map" [usePanning]="true" [latitude]="lat" [longitude]="lng" [zoom]="zoom" (mapClick)="mapClick()" (zoomChange)="zoomChange()"  >
+  <div *ngIf="response.length!=0">
+    <agm-marker *ngFor="let n of response" [latitude]=n.address.latitude [longitude]=n.address.longitude (markerClick)="clikedMark(n._id)" >
+      <agm-info-window [isOpen]="n.isDisplay">
+        <div>
+          <h3>Doctor: {{n.last_name}} {{n.first_name}}</h3>
+          <p>address: {{n.address.num}},{{n.address.street_address}}</p>
+          <button (click)="newDoctorRdv(n)">Prendez rendez-vous</button>
+        </div>
+      </agm-info-window>
+    </agm-marker>
+  </div>
+</agm-map>
+
   </div>
 </div>

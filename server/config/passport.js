@@ -6,6 +6,7 @@ var passport = require('passport');
 var LocalStrategy   = require('passport-local').Strategy;
 // load up the user model
 var User = require('../models/user');
+var logger = require('../config/logger');
 
 passport.use('local',new LocalStrategy({
   usernameField: 'email',
@@ -13,7 +14,8 @@ passport.use('local',new LocalStrategy({
   passReqToCallback : true},
   function(req, email, password, done) {
     User.findOne({ email: email }, function (err, user) {
-      if (err) { return done(err); }
+      if (err) {
+        return done(err); }
       // Return if user not found in database
       if (!user) {
         return done(null, false, {

@@ -3,6 +3,7 @@
  */
 var mongoose = require('mongoose');
 var User = require('../models/user');
+var encrypt = require('mongoose-encryption');
 
 //define the schema
 var postSchema = mongoose.Schema ({
@@ -13,6 +14,10 @@ var postSchema = mongoose.Schema ({
   type: {type:String, enum:['INFO','ALERT','POST','TREATMENT']}
 });
 
+var encKey = process.env.ENCKEY;
+var signKey = process.env.SIGNKEY;
+
+postSchema.plugin(encrypt, {encryptionKey: encKey, signingKey: signKey, excludeFromEncryption: ['sender', 'receiver']});
 
 // create the model for users and expose it to our app
 module.exports = mongoose.model('Post', postSchema);

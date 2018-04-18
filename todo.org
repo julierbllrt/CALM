@@ -1,6 +1,0 @@
-FIXME
-Connexion (ouvre popup)
-si changement de fenètre sans fermer popup, on perd (à tous jamais ou presque)
-le focus (écran grisé)
-
-TODO

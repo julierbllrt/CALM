@@ -2,6 +2,7 @@
  * Created by hongchang on 2/11/2017.
  */
 var mongoose = require('mongoose');
+var encrypt = require('mongoose-encryption');
 
 //define the schema
 var reminderSchema = mongoose.Schema ({
@@ -21,6 +22,10 @@ var reminderSchema = mongoose.Schema ({
 
 });
 
+var encKey = process.env.ENCKEY;
+var signKey = process.env.SIGNKEY;
+
+reminderSchema.plugin(encrypt, {encryptionKey: encKey, signingKey: signKey});
 
 // create the model for users and expose it to our app
 module.exports = mongoose.model('Reminder', reminderSchema);

@@ -21,8 +21,8 @@
         "styles.css"
       ],
       "scripts": [],
+      "environmentSource": "environments/environment.ts",
       "environments": {
-        "source": "environments/environment.ts",
         "dev": "environments/environment.ts",
         "prod": "environments/environment.prod.ts"
       }
@@ -54,6 +54,9 @@
     "inline": {
       "style": false,
       "template": false
+    },
+    "build": {
+      "showCircularDependencies": false
     },
     "spec": {
       "class": false,

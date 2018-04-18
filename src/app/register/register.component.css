@@ -8,20 +8,18 @@
 
 .agm-map {
     min-width: 200px;
-    /*width: 80%;*/
     height: 500px;
-    /*float:right;*/
     margin-left: 10%;
     margin-right: 10%;
-
 }
 
-.center{
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
+.center {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
 }
-.margin{
-  margin-left: 20%;
-  margin-right: 20%;
+
+.margin {
+    margin-left: 20%;
+    margin-right: 20%;
 }
