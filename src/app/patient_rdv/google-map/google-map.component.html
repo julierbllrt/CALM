@@ -2,11 +2,10 @@
   <h3> Trouver le médecin le plus proche</h3>
   <div class="panel-body">
     <div class="input-group">
-      <input type="search" #searchBox class="form-control" size="50" placeholder="Rechercher un médecin" required><br/>
-      Rayon de recherche : <input type="number" [(ngModel)]="rayon" step="0.1"/> Km
-      <div class="input-group-btn">
-        <button type="button" class="btn btn-danger" (click)="rechercheClick(searchBox.value)">Rechercher</button>
-      </div>
+      <input type="search" #searchBox class="form-control" size="50" placeholder="Rechercher un médecin"
+              required><br/> Rayon de recherche : <input id="input_km_map" type="number"
+              [(ngModel)]="rayon" step="0.1" /> Km
+      <button type="button" class="btn btn-danger" (click)="rechercheClick(searchBox.value)">Rechercher</button>
     </div>
 
 <agm-map class="agm-map" [usePanning]="true" [latitude]="lat" [longitude]="lng" [zoom]="zoom" (mapClick)="mapClick()" (zoomChange)="zoomChange()"  >
@@ -22,5 +21,6 @@
     </agm-marker>
   </div>
 </agm-map>
+
   </div>
 </div>

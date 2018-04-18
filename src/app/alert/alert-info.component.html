@@ -1,50 +1,45 @@
 <div class="btn-group" id="infoSign">
-  <button type="button"
-          class="btn btn-default"
-          aria-label="Left Align"
-          data-toggle="dropdown">
+  <button type="button" class="btn btn-default" aria-label="Left Align" data-toggle="dropdown">
     <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span><span class="badge">{{alertNumber}}</span>
   </button>
 
-  <ul class="dropdown-menu"  id="alertTable">
+  <ul class="dropdown-menu" id="alertTable">
 
-    <li *ngFor="let n of demands"
-        class="clearfix"
-        (click)="liClick($event)"
-        [ngClass]="{'liConfirm': n.confirm}">
+    <li *ngFor="let n of demands" class="clearfix" (click)="liClick($event)" [ngClass]="{'liConfirm': n.confirm}">
+      <button type="button" class="close" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
       <div class="displaybox">
-        user:{{n.user.first_name}} {{n.user.last_name}}<br/> user Mail:{{n.user.email}}
-        <br/> demande autorisation:{{n.subject}} <br/> autorisation type: {{n.type}}<br/>
-         data:{{n.Created_at.toLocaleString()}}
+        Patient : {{n.user.first_name}} {{n.user.last_name}}<br/>
+        Mail du patient : {{n.user.email}}
+        <br/> Demande autorisation:{{n.subject}} <br/> Type d'autorisation : {{n.type}}<br/>
+        Contenu : {{n.Created_at.toLocaleString()}}
       </div>
-      <button type="button"
-              class="btn btn-danger success"
-              [ngClass]="{'buttonConfirm': n.confirm}"
+      <button type="button" class="btn btn-danger success" [ngClass]="{'buttonConfirm': n.confirm}"
               (click)="nonAutoriserClick(n._id)">non autoriser
       </button>
-      <button type="button"
-              class="btn btn-danger success"
-              [ngClass]="{'buttonConfirm': n.confirm}"
+      <button type="button" class="btn btn-danger success" [ngClass]="{'buttonConfirm': n.confirm}"
               (click)="autoriserClick(n._id)">autoriser
       </button>
     </li>
 
 
-    <li *ngFor="let n of treatments"
-        class="clearfix"
-        (click)="liClick($event)">
+    <li *ngFor="let n of treatments" class="clearfix" (click)="liClick($event)">
+      <button type="button" class="close" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
       <div class="displaybox">
-        A new treatment!!!<br/> start:{{n.start}} <br/> medicament: {{n.name}} <br/>
-        frequence:{{n.frequence}} <br/> quantity: {{n.quantity}}
+        NOUVEAU TRAITEMENT<br/> Début le {{n.start}} <br/> Médicament : {{n.name}}
+        <br/> Combien de fois : {{n.frequence}} <br/> Combien d'unité : {{n.quantity}}
       </div>
     </li>
-    <li *ngFor="let n of consultations"
-        class="clearfix"
-        (click)="liClick($event)">
+    <li *ngFor="let n of consultations" class="clearfix" (click)="liClick($event)">
+      <button type="button" class="close" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
       <div class="displaybox">
-        A new consultation!!!<br/> who:{{n.patient.user_id.first_name}}
-        {{n.patient.user_id.last_name}}<br/>
-        date: {{n.date}} <br/> motif:{{n.motif}} <br/>
+        NOUVEAU RENDEZ-VOUS<br/> Patient {{n.patient.user_id.first_name}} {{n.patient.user_id.last_name}}
+        <br/> Le {{n.date}} <br/> Motif : {{n.motif}} <br/>
       </div>
 
     </li>
