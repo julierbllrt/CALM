@@ -8,11 +8,11 @@
     <div class="row" *ngFor="let patient of patients">
       <div class="card card-block" *ngIf="patient.general_doctor">
         <!--Trick to display only the patients from the current doctor. Should NOT be made this way.-->
-        <!--<h4 class="card-title">{{ patient.user_id.first_name}} {{patient.user_id.last_name}}</h4>-->
-        <p class="card-text">{{patient.user_id.email}}</p>
-
-        <a class="btn btn-default btn-lg" (click)="change_submit(patient)">Envoyer un message</a>
-        <a type="button" [routerLink]="['/patient-treatment' , {'id' : patient.user_id._id}]">Traitementw</a>
+        <p class="card-title">{{ patient.user_id.first_name}} {{patient.user_id.last_name}}</p>
+        <p class="card-text">{{patient.user_id.email}} <br/>
+        <a class="btn btn-default btn-lg" (click)="change_submit(patient)">Envoyer un message</a><br/>
+        <a type="button" [routerLink]="['/patient-treatment' , {'id' : patient.user_id._id}]">Traitement</a>
+</p>
       </div>
     </div>
 
@@ -34,6 +34,3 @@
     <h1>Accès non autorisé, veuillez vous connecter pour accéder à cette page !</h1>
   </div>
 </div>
-
-
-
