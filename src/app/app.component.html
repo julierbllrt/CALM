@@ -1,6 +1,4 @@
-<app-reminder></app-reminder>
 <header>
-
   <nav class="navbar navbar-default navbar-fixed-top desktop">
     <div class="container">
       <div class="navbar-header">
@@ -36,8 +34,9 @@
             <div class="dropdown-menu">
               <li>
                 <a *ngIf="isLogged && (user.role[0] == 'patient' && user.role[1] != 'building' && user.role[1] != 'organisation')"
-                        [routerLink]="['/current-treatment' , {'id' : user._id}]" routerLinkActive="active"
-                        [routerLinkActiveOptions]="{exact:true}">
+                      [routerLink]="['/current-treatment' , {'id' : user._id}]" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
+
+
                   <i class="glyphicon glyphicon-folder-open"></i> Mes traitements
                 </a>
               </li>
@@ -83,7 +82,7 @@
         </li>
         <li>
           <div>
-            <button>
+            <button *ngIf="!isLogged">
             <a *ngIf="!isLogged" routerLink="login" routerLinkActive="active">
             <span class="glyphicon glyphicon-log-in"></span> Connexion</a>
           </button>
@@ -106,6 +105,7 @@
   </nav>
 
 
+
   <nav class="navbar navbar-default navbar-fixed-top mobile">
     <div class="container">
       <div class="navbar-header">
@@ -116,10 +116,10 @@
       </div>
 
       <div class="collapse navbar-collapse" id="myNavbar">
-        <ul class="nav navbar-nav flex-column">
+        <ul scroll="no" class="nav navbar-nav flex-column">
           <li>
             <div class="btn-group">
-              <button type="button" class="btn btn-default">Cappac</button>
+              <button type="button" class="btn btn-default"><a href="#">Cappac</a></button>
               <button button type="button" class="btn btn-default dropdown-toggle dropdown-toggle-split"
                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span class="glyphicon glyphicon-triangle-bottom"></span>
@@ -136,9 +136,9 @@
           </li>
           <li>
             <div *ngIf="isLogged" class="btn-group">
-              <button type="button" class="btn btn-default" *ngIf="user">
-              {{user.first_name}}
-            </button>
+              <button type="button" class="btn btn-default" data-toggle="dropdown" *ngIf="user">
+                {{user.first_name}}
+              </button>
               <button button type="button" class="btn btn-default dropdown-toggle dropdown-toggle-split"
                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <span class="glyphicon glyphicon-triangle-bottom"></span>
@@ -193,7 +193,7 @@
           </li>
           <li>
             <div>
-              <button data-toggle="collapse">
+              <button *ngIf="!isLogged">
               <a *ngIf="!isLogged" routerLink="login" routerLinkActive="active">
               <span class="glyphicon glyphicon-log-in"></span> Connexion</a>
             </button>

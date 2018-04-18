@@ -9,18 +9,48 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <script type="text/javascript">$(document).ready(function () {
-        $(".navbar-nav li a").click(function(event) {
-          $(".navbar-collapse").collapse('hide');
-          console.log("close");
-        });
-      });</script>
+  <script src='https://www.google.com/recaptcha/api.js'></script>
+
+  <script type="text/javascript">
+  $(document).ready(function() {
+    $(".navbar-collapse li a").click(function(event) {
+      $(".collapse").collapse('hide');
+    });
+  });
+
+  function confirmEmail() {
+    var email = document.getElementById("email");
+    var email_confirmation = document.getElementById("email_confirmation");
+    if (email.value == email_confirmation.value) {
+      email.style.borderColor = "green";
+      email_confirmation.style.borderColor = "green";
+    }
+    else if (email.value != email_confirmation.value) {
+      email.style.borderColor = "red";
+      email_confirmation.style.borderColor = "red";
+    }
+  }
+
+  function confirmPasswd() {
+    var passwd = document.getElementById("password");
+    var passwd_confirmation = document.getElementById("password_confirmation");
+
+    if (passwd.value == passwd_confirmation.value) {
+      passwd.style.borderColor = "Green";
+      passwd_confirmation.style.borderColor = "Green";
+    }
+    else if (passwd.value != passwd_confirmation.value) {
+      passwd.style.borderColor = "Red";
+      passwd_confirmation.style.borderColor = "Red";
+    }
+  }
+  </script>
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 
 <body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
-  <app-root style="font-size: 20px; margin:100px;">Loading...</app-root>
+  <app-root style="font-size: 20px;">Loading...</app-root>
 </body>
 
 </html>

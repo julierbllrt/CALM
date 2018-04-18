@@ -2,25 +2,26 @@
   <h3> Trouver le médecin le plus proche</h3>
   <div class="panel-body">
     <div class="input-group">
-      <input type="search" #searchBox class="form-control" size="50" placeholder="Rechercher un médecin" required><br/>
-      Rayon de recherche : <input type="number" [(ngModel)]="rayon" step="0.1"/> Km
-      <div class="input-group-btn">
-        <button type="button" class="btn btn-danger" (click)="rechercheClick(searchBox.value)">Rechercher</button>
-      </div>
+      <input type="search" #searchBox class="form-control" size="50" placeholder="Rechercher un médecin"
+              required><br/> Rayon de recherche : <input id="input_km_map" type="number"
+              [(ngModel)]="rayon" step="0.1" /> Km
+      <button type="button" class="btn btn-danger" (click)="rechercheClick(searchBox.value)">Rechercher</button>
     </div>
 
-<sebm-google-map class="agm-map" [usePanning]="true" [latitude]="lat" [longitude]="lng" [zoom]="zoom" (setZoom)="setZoom(2)" (mapClick)="mapClick()" (zoomChange)="zoomChange()"  >
-  <div *ngIf="response.length!=0">
-    <sebm-google-map-marker *ngFor="let n of response" [latitude]=n.address.latitude [longitude]=n.address.longitude (markerClick)="clikedMark(n._id)" >
-      <sebm-google-map-info-window [isOpen]="n.isDisplay">
-        <div>
-          <h3>Doctor: {{n.last_name}} {{n.first_name}}</h3>
-          <p>address: {{n.address.num}},{{n.address.street_address}}</p>
-          <button (click)="newDoctorRdv(n)">Prendez rendez-vous</button>
-        </div>
-      </sebm-google-map-info-window>
-    </sebm-google-map-marker>
-  </div>
-</sebm-google-map>
+    <sebm-google-map class="agm-map" [usePanning]="true" [latitude]="lat" [longitude]="lng"
+            [zoom]="zoom" (setZoom)="setZoom(2)" (mapClick)="mapClick()" (zoomChange)="zoomChange()">
+      <div *ngIf="response.length!=0">
+        <sebm-google-map-marker *ngFor="let n of response" [latitude]=n.address.latitude
+                [longitude]=n.address.longitude (markerClick)="clikedMark(n._id)">
+          <sebm-google-map-info-window [isOpen]="n.isDisplay">
+            <div>
+              <h3>Doctor: {{n.last_name}} {{n.first_name}}</h3>
+              <p>address: {{n.address.num}},{{n.address.street_address}}</p>
+              <button (click)="newDoctorRdv(n)">Prendez rendez-vous</button>
+            </div>
+          </sebm-google-map-info-window>
+        </sebm-google-map-marker>
+      </div>
+    </sebm-google-map>
   </div>
 </div>
