@@ -2,7 +2,6 @@
  * Created by Neko on 21/11/2017
  */
 
-
 module.exports = function (passport) {
   const express = require('express');
   const router = express.Router();
@@ -22,7 +21,7 @@ module.exports = function (passport) {
   var Reminder = require('../models/reminder');
   var Treatment = require('../models/treatment');
 
-  function createFirstRappel(treatment, res) {
+  function createFirstRappel (treatment, res) {
     var start = new Date();
     start = start.toString();
     console.log(start);
@@ -42,7 +41,7 @@ module.exports = function (passport) {
     rappel.frequence = treatment.frequence;
     rappel.typeFrequence = treatment.typeFrequence;
     rappel.info = treatment.info;
-    start = start.getDate() + "-" + (start.getMonth() + 1) + "-" + start.getFullYear();
+    start = start.getDate() + '-' + (start.getMonth() + 1) + '-' + start.getFullYear();
     new Reminder({
       userId: treatment.userId,
       rappel: rappel,
@@ -53,15 +52,14 @@ module.exports = function (passport) {
     }).save().then(function (content) {
       res.json(content);
     });
-
   }
 
-  //get Treatment for a specific patient
+  // get Treatment for a specific patient
   router.get('/treatment/:id', auth, function (req, res) {
     Treatment
       .find({userId: req.params.id, expired: false})
       .exec(function (err, docs) {
-        res.json(docs);
+        if (!err && docs) { res.json(docs); } else { res.json(err); }
       });
   });
 
@@ -91,7 +89,7 @@ module.exports = function (passport) {
   });
 
   router.put('/updateTreatment/:id', auth, function (req, res, next) {
-    console.log("update treatment " + req.params.id);
+    console.log('update treatment ' + req.params.id);
     Treatment.findByIdAndUpdate(req.params.id, {
       $set: {
         name: req.body.name,
@@ -105,7 +103,7 @@ module.exports = function (passport) {
       }
     }, {new: true}, function (err, response) {
       if (err) {
-        res.json(err)
+        res.json(err);
       }
       if (response) {
         var start1 = new Date();
@@ -125,15 +123,15 @@ module.exports = function (passport) {
         rappel.frequence = response.frequence;
         rappel.typeFrequence = response.typeFrequence;
         rappel.info = response.info;
-        start1 = start1.getDate() + "-" + (start1.getMonth() + 1) + "-" + start1.getFullYear();
+        start1 = start1.getDate() + '-' + (start1.getMonth() + 1) + '-' + start1.getFullYear();
         Reminder.update({
-          traitementId: req.params.id,
+          traitementId: req.params.id
         }, {
           time: DATETRANSLATION[rappel.takingState][0],
           date: start1,
           rappel: rappel
         }).exec(function (err, docs) {
-          console.log("erro info" + err);
+          console.log('erro info' + err);
           res.json(docs);
         });
       }
@@ -142,47 +140,38 @@ module.exports = function (passport) {
 
   router.delete('/treatment/:id', auth, function (req, res, next) {
     Treatment.remove({_id: req.params.id}, function (err, docs) {
-      if (err) return (err);
-      else
-        res.json(docs);
+      if (!err && docs) { res.json(docs); } else { res.json(err); }
     });
   });
 
   router.get('/getMedicName/:medic', auth, function (req, res, next) {
     var request = require('request');
     request('https://open-medicaments.fr/api/v1/medicaments?query=' + req.params.medic, function (error, response, body) {
-      if (!error && response.statusCode == 200) {
+      if (!error && response.statusCode === 200) {
         res.json(body);
       }
-    })
+    });
 
-    //res.json('https://open-medicaments.fr/api/v1/medicaments?query=doliprane');
+    // res.json('https://open-medicaments.fr/api/v1/medicaments?query=doliprane');
   });
-
 
   router.get('/getMedicInfo/:codeCIS', auth, function (req, res, next) {
     var request = require('request');
     request('https://open-medicaments.fr/api/v1/medicaments/' + req.params.codeCIS, function (error, response, body) {
-      if (!error && response.statusCode == 200) {
+      if (!error && response.statusCode === 200) {
         res.json(body);
       }
-    })
+    });
 
-    //res.json('https://open-medicaments.fr/api/v1/medicaments?query=doliprane');
+    // res.json('https://open-medicaments.fr/api/v1/medicaments?query=doliprane');
   });
 
   router.get('/getMedicInteraction/:ids', auth, function (req, res, next) {
     var request = require('request');
     request('https://open-medicaments.fr/api/v1/interactions/?ids=' + req.params.ids, function (error, response, body) {
       res.json(body);
-    })
+    });
   });
 
-
   return router;
-
 };
-
-
-
-

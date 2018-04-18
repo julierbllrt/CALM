@@ -10,10 +10,11 @@
   <br>
   <div class="video-wrapper">
     <div class="video-container">
-      <iframe width="100%"
+      <iframe width="100%" 
               height="800"
-              src="https://www.youtube.com/embed/KXdNGiiHTjk"
-              frameborder="0"
+              [src]="video | safe"
+              frameborder="0" 
+              allow="autoplay; encrypted-media" 
               allowfullscreen></iframe>
     </div>
     <br>

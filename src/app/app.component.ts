@@ -11,6 +11,7 @@ import {UsersService} from "./shared/services/users.service";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit{
+  title = 'app';
   isLogged: boolean; // if user is logged or not
   user= new User(null);
   image = require('./shared/img/logo_calm.png');
