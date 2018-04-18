@@ -3,6 +3,7 @@
  */
 
 var mongoose = require('mongoose');
+var encrypt = require('mongoose-encryption');
 
 //define the schema
 var treatmentSchema = mongoose.Schema ({
@@ -21,6 +22,10 @@ var treatmentSchema = mongoose.Schema ({
   doctor : {type: mongoose.Schema.Types.ObjectId, ref: 'Doctor'}
 });
 
+var encKey = process.env.ENCKEY;
+var signKey = process.env.SIGNKEY;
+
+treatmentSchema.plugin(encrypt, {encryptionKey: encKey, signingKey: signKey, excludeFromEncryption: ['doctor']});
 
 // create the model for users and expose it to our app
 module.exports = mongoose.model('Treatment', treatmentSchema);

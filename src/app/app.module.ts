@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { UsersService } from './shared/services/users.service';
@@ -27,7 +27,7 @@ import { DoctorSpaceComponent } from './doctor-space/doctor-space.component';
 import { BuildingSpaceComponent } from './building-space/building-space.component';
 import { DoctorSpaceService} from './shared/services/doctor-space.service';
 import { GoogleMapComponent } from './patient_rdv/google-map/google-map.component';
-import { AgmCoreModule } from "angular2-google-maps/core";
+import{ AgmCoreModule } from '@agm/core';
 import { PostsComponent } from './medical-file/posts/posts.component';
 import { OrganisationSpaceComponent } from './organisation-space/organisation-space.component';
 import {PatientTreatmentComponent} from './doctor-space/patient-treatment/patient-treatment.component';
@@ -92,6 +92,7 @@ import { ReCaptchaModule } from 'angular2-recaptcha';
     }),
     ReCaptchaModule
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
     UsersService,
     AuthenticationService,
