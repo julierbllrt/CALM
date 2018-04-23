@@ -125,8 +125,10 @@
         <div style="display:inline;" *ngIf="user.address.city !== '' && user.address.street_address !== '' && user.address.num !== 0">
             {{displayAddress()}}
         </div>
+	<div class="form-group margin">
         <re-captcha site_key="6Le2J08UAAAAAGBY8-r2rg70Z4-ySnqdi7ySOuNz"></re-captcha>
-        <br/>
+        </div>
+<br/>
         <div class="form-group margin">
             <button type="submit" class="btn btn-primary btn-block" [disabled]="form.invalid">S'inscrire</button>
         </div>

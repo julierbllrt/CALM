@@ -43,9 +43,11 @@ export class PatientTreatmentComponent implements OnInit {
 
   ngOnInit() {
     this.newTreatment = new Treatment({});
+	console.log("patient_treament");
     this.route.params.subscribe((params: Params) => {
       this.userId = params['id'];
       if (this.userId) {
+	console.log(this.userId);
         this.getMedicamentList();
         this.usersService.getUser(this.userId).subscribe(
           data => {
@@ -64,6 +66,7 @@ export class PatientTreatmentComponent implements OnInit {
       data => {
         this.treatments = data;
         this.treatments.forEach(function (element) {
+	  console.log(element);
           this.treatment.getTreatmentInfo(element.codeCIS).subscribe(response => {
               const tmp = JSON.parse(response);
               if (tmp != null) {
